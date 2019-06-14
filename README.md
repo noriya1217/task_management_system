@@ -30,3 +30,5 @@
 |id||
 |task_id|integer|
 |name|string|
+
+プルリクエスト作成を促すバーを出現させるためだけの追加行
