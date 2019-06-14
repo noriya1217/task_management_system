@@ -15,6 +15,7 @@
 |id||
 |user_id|integer|
 |subject|string|
+|content|string|
 |priority|string|
 |status|string|
 |person_in_charge|string|
