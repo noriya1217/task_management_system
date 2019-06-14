@@ -1,13 +1,32 @@
-# システム要件
+# タスク管理システム　テーブル表
 
-1. 自分のタスクを簡単に登録したい
-1. タスクに終了期限を設定できるようにしたい
-1. タスクに優先順位をつけたい
-1. ステータス（未着手・着手・完了）を管理したい
-1. ステータスでタスクを絞り込みたい
-1. タスク名などで指定のタスクを検索したい
-1. タスクを一覧したい。一覧画面で（優先順位、終了期限などを元にして）ソートしたい
-1. タスクにラベルなどをつけて分類したい
-1. ユーザ登録し、自分が登録したタスクだけを見られるようにしたい
-1. また、上記の要件を満たすにあたって、次のような管理機能がほしいと考えています。
-1. ユーザの管理機能
+|user||
+|:--|:--|
+|id||
+|name|string|
+|email|string|
+|password_digest|string|
+|admin|boolean|
+
+---
+
+|task||
+|:--|:--|
+|id||
+|user_id|integer|
+|subject|string|
+|priority|string|
+|status|string|
+|person_in_charge|string|
+|start_date|datetime|
+|end_date|datetime|
+|deadline|datetime|
+|achievement_rate|integer|
+
+---
+
+|label||
+|:--|:--|
+|id||
+|task_id|integer|
+|name|string|
