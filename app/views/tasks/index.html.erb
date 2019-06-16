@@ -1,6 +1,14 @@
 <h1>Task一覧ページ</h1>
 
-<% @tasks.each do |task| %>
-  <%= task.subject %>
-  <%= task.content %>
-<% end %>
+<table>
+  <% @tasks.each do |task| %>
+    <tr> 
+      <td><%= task.subject %></td>
+      <td><%= task.content %></td>
+      <td><%= link_to '詳細', task_path(task.id) %></td>
+      <td><%= link_to '編集', edit_task_path(task.id) %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to '新規作成', new_task_path %>
