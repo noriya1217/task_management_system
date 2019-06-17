@@ -16,9 +16,14 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'capybara'
+  gem 'database_cleaner'
   gem 'devise'
+  gem 'factory_bot_rails'
+  gem 'launchy'
   gem 'pry-rails'
   gem 'rspec-rails'
+  gem 'spring-commands-rspec'
 end
 
 group :development do
@@ -31,9 +36,7 @@ group :development do
 end
 
 group :test do
-  gem 'capybara', '>= 2.15'
   gem 'chromedriver-helper'
-  gem 'database_cleaner'
   gem 'selenium-webdriver'
 end
 
