@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  it 'subjectの値がnilでNotNull制約違反になる' do
+  it 'subjectの値がnilならNotNull制約違反になる' do
     task = Task.new(subject: nil, content: '失敗テスト')
     expect(task).not_to be_valid
   end
 
-  it 'contentの値がnilでNotNull制約違反になる' do
+  it 'contentの値がnilならNotNull制約違反になる' do
     task = Task.new(subject: '失敗テスト', content: nil)
     expect(task).not_to be_valid
   end
