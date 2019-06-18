@@ -17,7 +17,7 @@ RSpec.feature 'タスク管理システム', type: :feature do
     fill_in 'Subject', with: 'タスクの件名を入力する'
     fill_in 'Content', with: 'タスクの内容を入力する'
     # save_and_open_page
-    click_button 'Create Task'
+    click_button '登録する'
     expect(page).to have_content 'タスクの件名を入力する'
     expect(page).to have_content 'タスクの内容を入力する'
 
@@ -38,7 +38,7 @@ RSpec.feature 'タスク管理システム', type: :feature do
     click_link '編集'
     fill_in 'Subject', with: 'test_task_edit'
     fill_in 'Content', with: 'test_edit_content'
-    click_button 'Update Task'
+    click_button '更新する'
 
     expect(page).to have_content 'test_task_edit'
     expect(page).to have_content 'test_edit_content'
