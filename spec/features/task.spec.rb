@@ -16,7 +16,7 @@ RSpec.feature 'タスク管理システム', type: :feature do
     visit new_task_path
     fill_in 'Subject', with: 'タスクの件名を入力する'
     fill_in 'Content', with: 'タスクの内容を入力する'
-    # save_and_open_page
+
     click_button '登録する'
     expect(page).to have_content 'タスクの件名を入力する'
     expect(page).to have_content 'タスクの内容を入力する'
@@ -50,6 +50,17 @@ RSpec.feature 'タスク管理システム', type: :feature do
     click_link '削除'
     expect(page).to have_no_content 'test_task_destroy'
     expect(page).to have_no_content 'test_destroy_content'
+  end
+
+  scenario 'タスクが作成日時の降順に並んでいるかのテスト' do
+    Task.create!(subject: 'test_task_01', content: 'testtesttest')
+    Task.create!(subject: 'test_task_02', content: 'samplesample')
+    visit tasks_path
+    save_and_open_page
+    trs = page.all('tr')
+    # テーブル最初の行には、'Subject'と'Content'が入っているため、最初のレコードが入るのは２行目から
+    expect(trs[1]).to have_content 'test_task_02'
+    expect(trs[1]).to have_content 'samplesample'
   end
 
 end
