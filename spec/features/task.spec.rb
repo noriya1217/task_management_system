@@ -2,14 +2,15 @@ require 'rails_helper'
 
 RSpec.feature 'タスク管理システム', type: :feature do
 
-  scenario 'タスク一覧のテスト' do
-    Task.create!(subject: 'test_task_01', content: 'testtesttest')
-    Task.create!(subject: 'test_task_02', content: 'samplesample')
+  background do
+    FactoryBot.create(:task)
+    FactoryBot.create(:second_task)
+  end
 
+  scenario 'タスク一覧のテスト' do
     visit tasks_path
     expect(page).to have_content 'testtesttest'
     expect(page).to have_content 'samplesample'
-
   end
 
   scenario 'タスク作成のテスト' do
@@ -24,18 +25,14 @@ RSpec.feature 'タスク管理システム', type: :feature do
   end
 
   scenario 'タスク詳細のテスト' do
-    Task.create!(subject: 'test_task_show', content: 'test_show_content')
-
     visit tasks_path
-    click_link '詳細'
-    expect(page).to have_content 'test_task_show'
-    expect(page).to have_content 'test_show_content'
+    all('tr')[1].click_link '詳細'
+    expect(page).to have_content 'samplesample'
   end
 
   scenario 'タスク編集のテスト' do
-    Task.create!(subject: 'test_task_new', content: 'test_new_content')
     visit tasks_path
-    click_link '編集'
+    all('tr')[1].click_link '編集'
     fill_in 'Subject', with: 'test_task_edit'
     fill_in 'Content', with: 'test_edit_content'
     click_button '更新する'
@@ -45,20 +42,17 @@ RSpec.feature 'タスク管理システム', type: :feature do
   end
 
   scenario 'タスク削除のテスト' do
-    Task.create!(subject: 'test_task_destroy', content: 'test_destroy_content')
     visit tasks_path
-    click_link '削除'
-    expect(page).to have_no_content 'test_task_destroy'
-    expect(page).to have_no_content 'test_destroy_content'
+    all('tr')[1].click_link '削除'
+    expect(page).to have_no_content 'test_task_02'
+    expect(page).to have_no_content 'samplesample'
   end
 
   scenario 'タスクが作成日時の降順に並んでいるかのテスト' do
-    Task.create!(subject: 'test_task_01', content: 'testtesttest')
-    Task.create!(subject: 'test_task_02', content: 'samplesample')
     visit tasks_path
-    save_and_open_page
+    # save_and_open_page
     trs = page.all('tr')
-    # テーブル最初の行には、'Subject'と'Content'が入っているため、最初のレコードが入るのは２行目から
+    # テーブル最初の行には、'Subject'と'Content'が入っているため、最初のレコードが入るのは2行目から
     expect(trs[1]).to have_content 'test_task_02'
     expect(trs[1]).to have_content 'samplesample'
   end
