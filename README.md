@@ -18,9 +18,9 @@
 |admin          |boolean|priority        |string  |
 |               |       |status          |string  |
 |               |       |person_in_charge|string  |
-|               |       |start_date      |datetime|
-|               |       |end_date        |datetime|
-|               |       |deadline        |datetime|
+|               |       |start_date_at   |datetime|
+|               |       |end_date_at     |datetime|
+|               |       |expired_at      |datetime|
 |               |       |achievement_rate|integer |
 
 ---
