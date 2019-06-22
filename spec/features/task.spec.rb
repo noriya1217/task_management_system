@@ -5,6 +5,7 @@ RSpec.feature 'タスク管理システム', type: :feature do
   background do
     FactoryBot.create(:task)
     FactoryBot.create(:second_task)
+    page.driver.browser.authorize('hoge', 'piyo')
   end
 
   scenario 'タスク一覧のテスト' do
@@ -55,6 +56,29 @@ RSpec.feature 'タスク管理システム', type: :feature do
     # テーブル最初の行には、'Subject'と'Content'が入っているため、最初のレコードが入るのは2行目から
     expect(trs[1]).to have_content 'test_task_02'
     expect(trs[1]).to have_content 'samplesample'
+  end
+
+  scenario 'タスクが終了期限の降順に並んでいるかのテスト' do
+    visit new_task_path
+    fill_in 'Subject', with: '終了期限テスト新規2021年'
+    fill_in 'Content', with: '終了期限テスト新規2021年'
+    select '2021', from: 'task[expired_at(1i)]'
+    click_button '登録する'
+
+    # 新規作成したデータを残しておき、既存レコードの終了期限を新規データより後に編集する
+    all('tr')[2].click_link '編集'
+    fill_in 'Subject', with: '終了期限テスト編集2022年'
+    fill_in 'Content', with: '終了期限テスト編集2022年'
+    select '2022', from: 'task[expired_at(1i)]'
+    click_button '更新する'
+
+    click_link '一覧'
+    click_link 'タスクを終了期限順に並び替える'
+    
+    trs = page.all('tr')
+    # テーブル最初の行には、'Subject'と'Content'が入っているため、最初のレコードが入るのは2行目から
+    expect(trs[1]).to have_content '終了期限テスト編集2022年'
+    expect(trs[2]).to have_content '終了期限テスト新規2021年'
   end
 
 end
