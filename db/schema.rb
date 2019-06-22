@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2019_06_21_070426) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "expired_at", default: "2019-06-19 16:13:20", null: false
-    t.integer "state", default: 0, null: false
+    t.string "state", default: "未着手", null: false
     t.index ["state"], name: "index_tasks_on_state"
   end
 

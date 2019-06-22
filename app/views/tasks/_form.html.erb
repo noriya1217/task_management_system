@@ -29,9 +29,9 @@
   <% if action_name == 'edit' %>
     <div class='field'>
       <%= form.label :state %>
-      <%= form.radio_button 'state', 'task_not_running' %>未着手
-      <%= form.radio_button 'state', 'task_running' %>着手中
-      <%= form.radio_button 'state', 'task_done' %>完了
+      <%= form.radio_button 'state', '未着手' %>未着手
+      <%= form.radio_button 'state', '着手中' %>着手中
+      <%= form.radio_button 'state', '完了' %>完了
     </div>
   <% end %>
 

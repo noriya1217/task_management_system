@@ -1,4 +1,5 @@
 require 'rails_helper'
+# save_and_open_page
 
 RSpec.feature 'タスク管理システム', type: :feature do
 
@@ -22,7 +23,6 @@ RSpec.feature 'タスク管理システム', type: :feature do
     click_button '登録する'
     expect(page).to have_content 'タスクの件名を入力する'
     expect(page).to have_content 'タスクの内容を入力する'
-
   end
 
   scenario 'タスク詳細のテスト' do
@@ -51,7 +51,6 @@ RSpec.feature 'タスク管理システム', type: :feature do
 
   scenario 'タスクが作成日時の降順に並んでいるかのテスト' do
     visit tasks_path
-    # save_and_open_page
     trs = page.all('tr')
     # テーブル最初の行には、'Subject'と'Content'が入っているため、最初のレコードが入るのは2行目から
     expect(trs[1]).to have_content 'test_task_02'
@@ -74,11 +73,50 @@ RSpec.feature 'タスク管理システム', type: :feature do
 
     click_link '一覧'
     click_link 'タスクを終了期限順に並び替える'
-    
+
     trs = page.all('tr')
     # テーブル最初の行には、'Subject'と'Content'が入っているため、最初のレコードが入るのは2行目から
     expect(trs[1]).to have_content '終了期限テスト編集2022年'
     expect(trs[2]).to have_content '終了期限テスト新規2021年'
+  end
+
+  scenario 'タスクのSubjectを検索するテスト' do
+    visit tasks_path
+    fill_in 'q_subject_cont', with: '01'
+    click_button 'Search'
+    expect(page).to have_content 'test_task_01'
+    expect(page).to have_no_content 'test_task_02'
+  end
+
+  scenario 'タスクのStateを検索するテスト' do
+    visit tasks_path
+    all('tr')[1].click_link '編集'
+    choose 'task_state_完了'
+    click_button '更新する'
+    click_link '一覧'
+    select '完了', from: 'q_state_cont'
+    click_button 'Search'
+    expect(page).to have_content 'test_task_02'
+    expect(page).to have_no_content 'test_task_01'
+  end
+
+  scenario 'タスクのSubjectとStateをAND検索するテスト' do
+    visit tasks_path
+    all('tr')[1].click_link '編集'
+    choose 'task_state_着手中'
+    click_button '更新する'
+    click_link '一覧'
+    all('tr')[2].click_link '編集'
+    choose 'task_state_着手中'
+    click_button '更新する'
+    click_link '一覧'
+
+    fill_in 'q_subject_cont', with: '01'
+    select '着手中', from: 'q_state_cont'
+    click_button 'Search'
+
+    expect(page).to have_content 'test_task_01'
+    expect(page).to have_no_content 'test_task_02'
   end
 
 end
