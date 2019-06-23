@@ -22,6 +22,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'devise'
   gem 'factory_bot_rails'
+  gem 'faker'
   gem 'launchy'
   gem 'pry-rails'
   gem 'rspec-rails'
