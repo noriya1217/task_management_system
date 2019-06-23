@@ -14,7 +14,6 @@ class TasksController < ApplicationController
       params[:q] = nil if params[:q][:subject_cont].blank?
     end
 
-    binding.pry
     @q = Task.search_ransack(params[:q])
     @searchs = @q.result(distinct: true)
   end
