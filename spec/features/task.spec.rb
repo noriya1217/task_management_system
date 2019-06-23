@@ -94,7 +94,7 @@ RSpec.feature 'タスク管理システム', type: :feature do
     choose 'task_state_完了'
     click_button '更新する'
     click_link '一覧'
-    select '完了', from: 'q_state_cont'
+    select '完了', from: 'q_state_eq'
     click_button 'Search'
     expect(page).to have_content 'test_task_02'
     expect(page).to have_no_content 'test_task_01'
@@ -112,7 +112,7 @@ RSpec.feature 'タスク管理システム', type: :feature do
     click_link '一覧'
 
     fill_in 'q_subject_cont', with: '01'
-    select '着手中', from: 'q_state_cont'
+    select '着手中', from: 'q_state_eq'
     click_button 'Search'
 
     expect(page).to have_content 'test_task_01'

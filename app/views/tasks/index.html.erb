@@ -7,7 +7,7 @@
   <%= f.label :subject %>
   <%= f.search_field :subject_cont %>
   <%= f.label :state %>
-  <%= f.select :state_cont, ['指定無し','未着手','着手中','完了'] %>
+  <%= f.select :state_eq, ['指定無し','未着手','着手中','完了'] %>
   <%= f.submit 'Search' %>
 <% end %>
 

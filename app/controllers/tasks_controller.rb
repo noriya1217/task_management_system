@@ -8,15 +8,15 @@ class TasksController < ApplicationController
       @tasks = Task.latest
     end
     if params[:q].nil?
-      
-    elsif params[:q][:state_cont] == '指定無し'
-      params[:q][:state_cont] = nil
+
+    elsif params[:q][:state_eq] == '指定無し'
+      params[:q][:state_eq] = nil
       params[:q] = nil if params[:q][:subject_cont].blank?
     end
 
-    @q = Task.ransack(params[:q])
+    binding.pry
+    @q = Task.search_ransack(params[:q])
     @searchs = @q.result(distinct: true)
-    # binding.pry
   end
 
   def new
