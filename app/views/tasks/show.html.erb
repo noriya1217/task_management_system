@@ -16,5 +16,10 @@
   <%= @task.expired_at %>
 </p>
 
+<p>
+  <strong>State:</strong>
+  <%= @task.state %>
+</p>
+
 <%= link_to '一覧',root_path %> |
 <%= link_to '編集',edit_task_path(@task.id)%>

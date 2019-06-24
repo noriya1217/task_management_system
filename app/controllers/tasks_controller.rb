@@ -7,6 +7,15 @@ class TasksController < ApplicationController
     else
       @tasks = Task.latest
     end
+    if params[:q].nil?
+
+    elsif params[:q][:state_eq] == '指定無し'
+      params[:q][:state_eq] = nil
+      params[:q] = nil if params[:q][:subject_cont].blank?
+    end
+
+    @q = Task.search_ransack(params[:q])
+    @searchs = @q.result(distinct: true)
   end
 
   def new
@@ -49,6 +58,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:subject, :content, :expired_at)
+    params.require(:task).permit(:subject, :content, :expired_at, :state)
   end
 end

@@ -2,23 +2,60 @@
 
 <h1>Task一覧ページ</h1>
 
-<table border='1'>
-  <tr>
-    <th>Subject</th>
-    <th>Content</th>
-    <th>Expired</th>
-  </tr>
-  <% @tasks.each do |task| %>
-    <tr> 
-      <td><%= task.subject %></td>
-      <td><%= task.content %></td>
-      <td><%= task.expired_at %></td>
-      <td><%= link_to '詳細', task_path(task.id) %></td>
-      <td><%= link_to '編集', edit_task_path(task.id) %></td>
-      <td><%= link_to '削除', task_path(task.id), method: :delete, data: { confirm: '本当に削除しますか？'} %></td>
-    </tr>
+<!-- (1)Subjectだけ入力 (2)Stateだけ入力 (3)どちらも入力 -->
+<%= search_form_for @q do |f| %>
+  <%= f.label :subject %>
+  <%= f.search_field :subject_cont %>
+  <%= f.label :state %>
+  <%= f.select :state_eq, ['指定無し','未着手','着手中','完了'] %>
+  <%= f.submit 'Search' %>
+<% end %>
+
+<% unless params[:q].nil? %>
+  <h3>検索結果【<%= @searchs.count %>件ヒットしました】</h3>
+  <% if @searchs.count > 0 %>
+    <table border='1'>
+      <tr>
+        <th>Subject</th>
+        <th>Content</th>
+        <th>Expired</th>
+        <th>State</th>
+      </tr>
+      <% @searchs.each do |search| %>
+        <tr>
+          <td><%= search.subject %></td>
+          <td><%= search.content %></td>
+          <td><%= search.expired_at %></td>
+          <td><%= search.state %></td>
+          <td><%= link_to '詳細', task_path(search.id) %></td>
+          <td><%= link_to '編集', edit_task_path(search.id) %></td>
+          <td><%= link_to '削除', task_path(search.id), method: :delete, data: { confirm: '本当に削除しますか？'} %></td>
+        </tr>
+      <% end %>
+    </table>
   <% end %>
-</table>
+<% else %>
+  <h3>タスクALL</h3>
+  <table border='1'>
+    <tr>
+      <th>Subject</th>
+      <th>Content</th>
+      <th>Expired</th>
+      <th>State</th>
+    </tr>
+    <% @tasks.each do |task| %>
+      <tr> 
+        <td><%= task.subject %></td>
+        <td><%= task.content %></td>
+        <td><%= task.expired_at %></td>
+        <td><%= task.state %></td>
+        <td><%= link_to '詳細', task_path(task.id) %></td>
+        <td><%= link_to '編集', edit_task_path(task.id) %></td>
+        <td><%= link_to '削除', task_path(task.id), method: :delete, data: { confirm: '本当に削除しますか？'} %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
 
 <%= link_to 'タスクを登録する', new_task_path %> |
 <%= link_to 'タスクを登録順に並び替える', tasks_path %> |
