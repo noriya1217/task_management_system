@@ -16,11 +16,11 @@
   <% if @searchs.count > 0 %>
     <table border='1'>
       <tr>
-        <th>Subject</th>
-        <th>Content</th>
-        <th>Expired</th>
-        <th>State</th>
-        <th>Priority</th>
+        <th><%= sort_link(@q, :subject) %></th>
+        <th><%= sort_link(@q, :content) %></th>
+        <th><%= sort_link(@q, :expired_at) %></th>
+        <th><%= sort_link(@q, :state) %></th>
+        <th><%= sort_link(@q, :priority) %></th>
       </tr>
       <% @searchs.each do |search| %>
         <tr>
@@ -40,11 +40,11 @@
   <h3>タスクALL</h3>
   <table border='1'>
     <tr>
-      <th>Subject</th>
-      <th>Content</th>
-      <th>Expired</th>
-      <th>State</th>
-      <th>Priority</th>
+      <th><%= sort_link(@q, :subject) %></th>
+      <th><%= sort_link(@q, :content) %></th>
+      <th><%= sort_link(@q, :expired_at) %></th>
+      <th><%= sort_link(@q, :state) %></th>
+      <th><%= sort_link(@q, :priority) %></th>
     </tr>
     <% @tasks.each do |task| %>
       <tr> 
@@ -63,5 +63,5 @@
 
 <%= link_to 'タスクを登録する', new_task_path %> |
 <%= link_to 'タスクを登録順に並び替える', tasks_path %> |
-<%= link_to 'タスクを終了期限順に並び替える', tasks_path(sort_expired: 'true') %> 
+<%= link_to 'タスクを終了期限順に並び替える', tasks_path(sort_expired: 'true') %> |
 <%= link_to 'タスクを優先度順に並び替える', tasks_path(sort_priority: 'true') %>
