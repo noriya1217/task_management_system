@@ -6,6 +6,7 @@ RSpec.feature 'タスク管理システム', type: :feature do
   background do
     FactoryBot.create(:task)
     FactoryBot.create(:second_task)
+    FactoryBot.create(:third_task)
     page.driver.browser.authorize('hoge', 'piyo')
   end
 
@@ -28,7 +29,7 @@ RSpec.feature 'タスク管理システム', type: :feature do
   scenario 'タスク詳細のテスト' do
     visit tasks_path
     all('tr')[1].click_link '詳細'
-    expect(page).to have_content 'samplesample'
+    expect(page).to have_content 'hogehogehoge'
   end
 
   scenario 'タスク編集のテスト' do
@@ -45,16 +46,16 @@ RSpec.feature 'タスク管理システム', type: :feature do
   scenario 'タスク削除のテスト' do
     visit tasks_path
     all('tr')[1].click_link '削除'
-    expect(page).to have_no_content 'test_task_02'
-    expect(page).to have_no_content 'samplesample'
+    expect(page).to have_no_content 'test_task_03'
+    expect(page).to have_no_content 'hogehogehoge'
   end
 
   scenario 'タスクが作成日時の降順に並んでいるかのテスト' do
     visit tasks_path
     trs = page.all('tr')
     # テーブル最初の行には、'Subject'と'Content'が入っているため、最初のレコードが入るのは2行目から
-    expect(trs[1]).to have_content 'test_task_02'
-    expect(trs[1]).to have_content 'samplesample'
+    expect(trs[1]).to have_content 'test_task_03'
+    expect(trs[1]).to have_content 'hogehogehoge'
   end
 
   scenario 'タスクが終了期限の降順に並んでいるかのテスト' do
@@ -96,7 +97,8 @@ RSpec.feature 'タスク管理システム', type: :feature do
     click_link '一覧'
     select '完了', from: 'q_state_eq'
     click_button 'Search'
-    expect(page).to have_content 'test_task_02'
+    expect(page).to have_content 'test_task_03'
+    expect(page).to have_no_content 'test_task_02'
     expect(page).to have_no_content 'test_task_01'
   end
 
@@ -111,26 +113,65 @@ RSpec.feature 'タスク管理システム', type: :feature do
     click_button '更新する'
     click_link '一覧'
 
-    fill_in 'q_subject_cont', with: '01'
+    fill_in 'q_subject_cont', with: '02'
     select '着手中', from: 'q_state_eq'
     click_button 'Search'
 
-    expect(page).to have_content 'test_task_01'
-    expect(page).to have_no_content 'test_task_02'
+    expect(page).to have_content 'test_task_02'
+    expect(page).to have_no_content 'test_task_03'
   end
 
   scenario 'タスクの優先度を、高中低の順に並び替えるテスト(link_to)' do
     visit tasks_path
+    all('tr')[2].click_link '編集'
+    choose 'task_priority_high'
+    click_button '更新する'
+    click_link '一覧'
+    all('tr')[3].click_link '編集'
+    choose 'task_priority_low'
+    click_button '更新する'
+    click_link '一覧'
     click_link 'タスクを優先度順に並び替える'
-    
+    trs = page.all('tr')
+    # テーブル最初の行には、ラベルが入っているため、最初のレコードが入るのは2行目から
+    expect(trs[1]).to have_content 'high'
+    expect(trs[2]).to have_content 'middle'
+    expect(trs[3]).to have_content 'low'
   end
 
   scenario 'タスクの優先度を、高中低の順に並び替えるテスト(Ransack)' do
-
+    visit tasks_path
+    all('tr')[2].click_link '編集'
+    choose 'task_priority_high'
+    click_button '更新する'
+    click_link '一覧'
+    all('tr')[3].click_link '編集'
+    choose 'task_priority_low'
+    click_button '更新する'
+    click_link '一覧'
+    click_link 'Priority'
+    trs = page.all('tr')
+    expect(trs[1]).to have_content 'high'
+    expect(trs[2]).to have_content 'middle'
+    expect(trs[3]).to have_content 'low'
   end
 
   scenario 'タスクの優先度を、低中高の順に並び替えるテスト(Ransack)' do
-    
+    visit tasks_path
+    all('tr')[2].click_link '編集'
+    choose 'task_priority_high'
+    click_button '更新する'
+    click_link '一覧'
+    all('tr')[3].click_link '編集'
+    choose 'task_priority_low'
+    click_button '更新する'
+    click_link '一覧'
+    click_link 'Priority'
+    click_link 'Priority'
+    trs = page.all('tr')
+    expect(trs[1]).to have_content 'low'
+    expect(trs[2]).to have_content 'middle'
+    expect(trs[3]).to have_content 'high'
   end
 
 end
