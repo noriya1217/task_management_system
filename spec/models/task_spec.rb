@@ -85,4 +85,9 @@ RSpec.describe Task, type: :model do
     task = Task.new(subject: '失敗テスト', content: '失敗テスト', expired_at: nil)
     expect(task).to be_valid
   end
+
+  it 'priorityの値がnilでも、defaltの値が入るため、NotNull制約違反にならない' do
+    task = Task.new(subject: '失敗テスト', content: '失敗テスト', priority: nil)
+    expect(task).to be_valid
+  end
 end
