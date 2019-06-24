@@ -10,9 +10,12 @@
   <%= f.select :state_eq, ['指定無し','未着手','着手中','完了'] %>
   <%= f.submit 'Search' %>
 <% end %>
+<br>
 
 <% unless params[:q].nil? %>
-  <h3>検索結果【<%= @searchs.count %>件ヒットしました】</h3>
+  <%= page_entries_info @searchs %>
+  <%= paginate @searchs %>
+  <h3>検索結果【<%= @search_count %>件ヒットしました】</h3>
   <% if @searchs.count > 0 %>
     <table border='1'>
       <tr>
@@ -37,6 +40,8 @@
     </table>
   <% end %>
 <% else %>
+  <%= page_entries_info @tasks %>
+  <%= paginate @tasks %>
   <h3>タスクALL</h3>
   <table border='1'>
     <tr>
@@ -65,3 +70,4 @@
 <%= link_to 'タスクを登録順に並び替える', tasks_path %> |
 <%= link_to 'タスクを終了期限順に並び替える', tasks_path(sort_expired: 'true') %> |
 <%= link_to 'タスクを優先度順に並び替える', tasks_path(sort_priority: 'true') %>
+<br><br>

@@ -3,11 +3,12 @@ class TasksController < ApplicationController
 
   def index
     if params[:sort_expired].present?
-      @tasks = Task.sort_expired
+      @tasks = Task.sort_expired(params[:page])
     elsif params[:sort_priority].present?
-      @tasks = Task.sort_priority
+      @tasks = Task.sort_priority(params[:page])
     else
-      @tasks = Task.latest
+      @tasks = Task.latest(params[:page])
+      # binding.pry
     end
 
     unless params[:q].nil?
@@ -18,7 +19,9 @@ class TasksController < ApplicationController
     end
 
     @q = Task.search_ransack(params[:q])
-    @searchs = @q.result(distinct: true)
+    # @q.resultをモデルに移行したいが、上手くいかない。余裕があれば考える。
+    @searchs = @q.result(distinct: true).page(params[:page])
+    @search_count = @q.result(distinct: true).count
   end
 
   def new
