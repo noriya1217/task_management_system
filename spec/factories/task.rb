@@ -8,4 +8,9 @@ FactoryBot.define do
     subject { 'test_task_02' }
     content { 'samplesample' }
   end
+
+  factory :third_task, class: Task do
+    subject { 'test_task_03' }
+    content { 'hogehogehoge' }
+  end
 end

@@ -28,28 +28,28 @@ RSpec.describe Task, type: :model do
 
   it 'State"完了"で検索されない' do
     Task.create(subject: '失敗テスト', content: '失敗テスト', state: '未着手')
-    task = Task.ransack("subject_cont"=>"", "state_eq"=>"完了")
+    task = Task.search_ransack("subject_cont"=>"", "state_eq"=>"完了")
     task = task.result(distinct: true)
     expect(task.empty?).to eq true
   end
 
   it 'State"完了"で検索される' do
     Task.create(subject: '成功テスト', content: '成功テスト', state: '完了')
-    task = Task.ransack("subject_cont"=>"", "state_eq"=>"完了")
+    task = Task.search_ransack("subject_cont"=>"", "state_eq"=>"完了")
     task = task.result(distinct: true)
     expect(task.empty?).to eq false
   end
 
   it 'Subject"成功"で検索されない' do
     Task.create(subject: '失敗テスト', content: '失敗テスト')
-    task = Task.ransack("subject_cont"=>"成功")
+    task = Task.search_ransack("subject_cont"=>"成功")
     task = task.result(distinct: true)
     expect(task.empty?).to eq true
   end
 
   it 'Subject"成功"で検索される' do
     Task.create(subject: '成功テスト', content: '成功テスト')
-    task = Task.ransack("subject_cont"=>"成功")
+    task = Task.search_ransack("subject_cont"=>"成功")
     task = task.result(distinct: true)
     expect(task.empty?).to eq false
   end
@@ -83,6 +83,11 @@ RSpec.describe Task, type: :model do
 
   it 'expired_atの値がnilでも、defaltの値が入るため、NotNull制約違反にならない' do
     task = Task.new(subject: '失敗テスト', content: '失敗テスト', expired_at: nil)
+    expect(task).to be_valid
+  end
+
+  it 'priorityの値がnilでも、defaltの値が入るため、NotNull制約違反にならない' do
+    task = Task.new(subject: '失敗テスト', content: '失敗テスト', priority: nil)
     expect(task).to be_valid
   end
 end

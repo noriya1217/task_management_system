@@ -4,6 +4,8 @@ class TasksController < ApplicationController
   def index
     if params[:sort_expired].present?
       @tasks = Task.sort_expired
+    elsif params[:sort_priority].present?
+      @tasks = Task.sort_priority
     else
       @tasks = Task.latest
     end
@@ -58,6 +60,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:subject, :content, :expired_at, :state)
+    params.require(:task).permit(:subject, :content, :expired_at, :state, :priority)
   end
 end
