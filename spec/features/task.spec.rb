@@ -119,4 +119,18 @@ RSpec.feature 'タスク管理システム', type: :feature do
     expect(page).to have_no_content 'test_task_02'
   end
 
+  scenario 'タスクの優先度を、高中低の順に並び替えるテスト(link_to)' do
+    visit tasks_path
+    click_link 'タスクを優先度順に並び替える'
+    
+  end
+
+  scenario 'タスクの優先度を、高中低の順に並び替えるテスト(Ransack)' do
+
+  end
+
+  scenario 'タスクの優先度を、低中高の順に並び替えるテスト(Ransack)' do
+    
+  end
+
 end

@@ -33,6 +33,13 @@
       <%= form.radio_button 'state', '着手中' %>着手中
       <%= form.radio_button 'state', '完了' %>完了
     </div>
+
+    <div class='field'>
+      <%= form.label :priority %>
+      <%= form.radio_button 'priority', :high %>high
+      <%= form.radio_button 'priority', :middle %>middle
+      <%= form.radio_button 'priority', :low %>low
+    </div>
   <% end %>
 
   <div class='actions'>
