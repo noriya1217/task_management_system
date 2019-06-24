@@ -56,7 +56,7 @@ RSpec.describe Task, type: :model do
 
   it 'Subject"成功"且つState"完了"で検索されない_Subjectが誤り' do
     Task.create(subject: '失敗テスト', content: '失敗テスト', state: '完了')
-    task = Task.ransack("subject_cont"=>"成功", "state_eq"=>"完了")
+    task = Task.search_ransack("subject_cont"=>"成功", "state_eq"=>"完了")
     task = task.result(distinct: true)
     expect(task.empty?).to eq true
 
@@ -64,14 +64,14 @@ RSpec.describe Task, type: :model do
 
   it 'Subject"成功"且つState"完了"で検索されない_Stateが誤り' do
     Task.create(subject: '成功テスト', content: '成功テスト', state: '未着手')
-    task = Task.ransack("subject_cont"=>"", "state_eq"=>"完了")
+    task = Task.search_ransack("subject_cont"=>"", "state_eq"=>"完了")
     task = task.result(distinct: true)
     expect(task.empty?).to eq true
   end
 
   it 'Subject"成功"且つState"完了"で検索される' do
     Task.create(subject: '成功テスト', content: '成功テスト', state: '完了')
-    task = Task.ransack("subject_cont"=>"", "state_eq"=>"完了")
+    task = Task.search_ransack("subject_cont"=>"", "state_eq"=>"完了")
     task = task.result(distinct: true)
     expect(task.empty?).to eq false
   end
