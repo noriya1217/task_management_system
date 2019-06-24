@@ -9,11 +9,12 @@ class TasksController < ApplicationController
     else
       @tasks = Task.latest
     end
-    if params[:q].nil?
 
-    elsif params[:q][:state_eq] == '指定無し'
-      params[:q][:state_eq] = nil
-      params[:q] = nil if params[:q][:subject_cont].blank?
+    unless params[:q].nil?
+      if params[:q][:state_eq] == '指定無し'
+        params[:q][:state_eq] = nil
+        params[:q] = nil if params[:q][:subject_cont].blank?
+      end
     end
 
     @q = Task.search_ransack(params[:q])

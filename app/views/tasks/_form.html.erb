@@ -26,12 +26,14 @@
     <%= form.datetime_select :expired_at, :include_blank => true %>
   </div>
 
-  <% if action_name == 'edit' %>
+  <% if action_name == 'new' || action_name == 'edit' %>
     <div class='field'>
       <%= form.label :state %>
       <%= form.radio_button 'state', '未着手' %>未着手
       <%= form.radio_button 'state', '着手中' %>着手中
-      <%= form.radio_button 'state', '完了' %>完了
+      <% if action_name == 'edit' %>
+        <%= form.radio_button 'state', '完了' %>完了
+      <% end %>
     </div>
 
     <div class='field'>
