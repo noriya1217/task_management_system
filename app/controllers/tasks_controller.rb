@@ -4,6 +4,8 @@ class TasksController < ApplicationController
   def index
     if params[:sort_expired].present?
       @tasks = Task.sort_expired
+    elsif params[:sort_priority].present?
+      @tasks = Task.sort_priority
     else
       @tasks = Task.latest
     end
