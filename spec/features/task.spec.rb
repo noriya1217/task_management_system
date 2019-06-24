@@ -174,4 +174,20 @@ RSpec.feature 'タスク管理システム', type: :feature do
     expect(trs[3]).to have_content 'high'
   end
 
+  scenario 'タスク一覧のページネーションテスト(kaminari)' do
+    Task.create!(subject: "成功テスト", content: "成功テスト")
+    30.times do
+      FactoryBot.create(:task)
+      FactoryBot.create(:second_task)
+      FactoryBot.create(:third_task)
+    end
+    visit tasks_path
+    # データ数94件、1ページ20件表示している
+    click_link '5'
+    trs = page.all('tr')
+    save_and_open_page
+    # backgroundにて最後から３つのデータは既に作成されているため
+    expect(trs[trs.length - 4]).to have_content '成功テスト'
+  end
+
 end
