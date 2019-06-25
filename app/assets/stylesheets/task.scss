@@ -1,3 +1,35 @@
-// Place all the styles related to the Task controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+// h1,h2,h3,h4,h5,div,p{
+//   border: dotted 1px;
+// }
+
+th,td{
+  padding: 5px;
+}
+
+header{
+  background-color: #AEC4E5;
+  padding: 10px;
+}
+
+footer{
+  background-color: #AEC4E5;
+  text-align: center;
+  padding: 10px;
+}
+
+.task_not_running{
+  background-color: #F99292;
+}
+
+.task_running{
+  background-color: #FFEED5;
+}
+
+.task_done{
+  background-color: #8CD790;
+}
+
+.field{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

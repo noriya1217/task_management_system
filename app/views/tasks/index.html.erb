@@ -1,73 +1,127 @@
-<p id='notice'><%= notice %></p>
+<div class='row field'>
+  <div class='col-md-12'>
+    <p id='notice'><%= notice %></p>
+  </div>
+</div>
 
-<h1>Task一覧ページ</h1>
+<div class='row field'>
+  <div class='col-md-12'>
+    <h2>Task一覧ページ</h2>
+  </div>
+</div>
 
 <!-- (1)Subjectだけ入力 (2)Stateだけ入力 (3)どちらも入力 -->
-<%= search_form_for @q do |f| %>
-  <%= f.label :subject %>
-  <%= f.search_field :subject_cont %>
-  <%= f.label :state %>
-  <%= f.select :state_eq, ['指定無し','未着手','着手中','完了'] %>
-  <%= f.submit 'Search' %>
-<% end %>
-<br>
+<div class='row field'>
 
-<% unless params[:q].nil? %>
-  <%= page_entries_info @searchs %>
-  <%= paginate @searchs %>
-  <h3>検索結果【<%= @search_count %>件ヒットしました】</h3>
-  <% if @searchs.count > 0 %>
-    <table border='1'>
-      <tr>
-        <th><%= sort_link(@q, :subject) %></th>
-        <th><%= sort_link(@q, :content) %></th>
-        <th><%= sort_link(@q, :expired_at) %></th>
-        <th><%= sort_link(@q, :state) %></th>
-        <th><%= sort_link(@q, :priority) %></th>
-      </tr>
-      <% @searchs.each do |search| %>
-        <tr>
-          <td><%= search.subject %></td>
-          <td><%= search.content %></td>
-          <td><%= search.expired_at %></td>
-          <td><%= search.state %></td>
-          <td><%= search.priority %></td>
-          <td><%= link_to '詳細', task_path(search.id) %></td>
-          <td><%= link_to '編集', edit_task_path(search.id) %></td>
-          <td><%= link_to '削除', task_path(search.id), method: :delete, data: { confirm: '本当に削除しますか？'} %></td>
-        </tr>
-      <% end %>
-    </table>
-  <% end %>
-<% else %>
-  <%= page_entries_info @tasks %>
-  <%= paginate @tasks %>
-  <h3>タスクALL</h3>
-  <table border='1'>
-    <tr>
-      <th><%= sort_link(@q, :subject) %></th>
-      <th><%= sort_link(@q, :content) %></th>
-      <th><%= sort_link(@q, :expired_at) %></th>
-      <th><%= sort_link(@q, :state) %></th>
-      <th><%= sort_link(@q, :priority) %></th>
-    </tr>
-    <% @tasks.each do |task| %>
-      <tr> 
-        <td><%= task.subject %></td>
-        <td><%= task.content %></td>
-        <td><%= task.expired_at %></td>
-        <td><%= task.state %></td>
-        <td><%= task.priority %></td>
-        <td><%= link_to '詳細', task_path(task.id) %></td>
-        <td><%= link_to '編集', edit_task_path(task.id) %></td>
-        <td><%= link_to '削除', task_path(task.id), method: :delete, data: { confirm: '本当に削除しますか？'} %></td>
-      </tr>
+  <div class='col-md-1'></div>
+  <div class='col-md-6'>
+    <%= search_form_for @q do |f| %>
+      <%= f.label :subject %>
+      <%= f.search_field :subject_cont %>
+      <%= f.label :state %>
+      <%= f.select :state_eq, ['指定無し','未着手','着手中','完了'] %>
+      <%= f.submit 'Search', class: 'btn btn-primary btn-sm' %>
     <% end %>
-  </table>
-<% end %>
+    <%= link_to 'タスクを新規登録する', new_task_path , class: 'btn btn-success btn-sm field'%>
+  </div>
 
-<%= link_to 'タスクを登録する', new_task_path %> |
-<%= link_to 'タスクを登録順に並び替える', tasks_path %> |
-<%= link_to 'タスクを終了期限順に並び替える', tasks_path(sort_expired: 'true') %> |
-<%= link_to 'タスクを優先度順に並び替える', tasks_path(sort_priority: 'true') %>
-<br><br>
+  <% unless params[:q].nil? %>
+
+    <div class='col-md-4'>
+      <%= page_entries_info @searchs %>
+      <%= paginate @searchs %>
+    </div>
+    <div class='col-md-1'></div>
+
+</div>
+    <div class='row field'>
+      <div class='col-md-12'>
+        <h3>検索結果【<%= @search_count %>件ヒットしました】</h3>
+        <% if @searchs.count > 0 %>
+          <table border='1'>
+
+            <tr>
+              <th><%= sort_link(@q, :subject) %></th>
+              <th><%= sort_link(@q, :content) %></th>
+              <th><%= sort_link(@q, :expired_at) %></th>
+              <th><%= sort_link(@q, :state) %></th>
+              <th><%= sort_link(@q, :priority) %></th>
+            </tr>
+
+            <% @searchs.each do |search| %>
+              <!-- 【課題】現段階ではState毎に背景色を分けているが、ソート対象をPriorityにした場合に背景色を切り替えれればなお良い。 -->
+              <% if search.state == '未着手' %>
+                <tr class='task_not_running'>
+              <% elsif search.state == '着手中' %>
+                <tr class='task_running'>
+              <% else %>
+                <tr class='task_done'>
+              <% end %>
+                <td><%= search.subject %></td>
+                <td><%= search.content %></td>
+                <td><%= search.expired_at %></td>
+                <td><%= search.state %></td>
+                <td><%= search.priority %></td>
+                <td><%= link_to '詳細', task_path(search.id), class: 'btn btn-info btn-sm' %></td>
+                <td><%= link_to '編集', edit_task_path(search.id), class: 'btn btn-warning btn-sm' %></td>
+                <td><%= link_to '削除', task_path(search.id), class: 'btn btn-danger btn-sm',method: :delete, data: { confirm: '本当に削除しますか？'} %></td>
+              </tr>
+            <% end %>
+
+          </table>
+        <% end %>
+      </div>
+    </div>
+
+  <% else %>
+
+    <div class='col-md-4'>
+      <%= page_entries_info @tasks %>
+      <%= paginate @tasks %>
+    </div>
+    <div class='col-md-1'></div>
+</div>
+    <div class='row field'>
+      <div class='col-md-12'>
+        <h3>タスクALL</h3>
+        <table border='1'>
+          <tr>
+            <th><%= sort_link(@q, :subject) %></th>
+            <th><%= sort_link(@q, :content) %></th>
+            <th><%= sort_link(@q, :expired_at) %></th>
+            <th><%= sort_link(@q, :state) %></th>
+            <th><%= sort_link(@q, :priority) %></th>
+          </tr>
+
+          <% @tasks.each do |task| %>
+            <% if task.state == '未着手' %>
+              <tr class='task_not_running'>
+            <% elsif task.state == '着手中' %>
+              <tr class='task_running'>
+            <% else %>
+              <tr class='task_done'>
+            <% end %>
+                <td><%= task.subject %></td>
+                <td><%= task.content %></td>
+                <td><%= task.expired_at %></td>
+                <td><%= task.state %></td>
+                <td><%= task.priority %></td>
+                <td><%= link_to '詳細', task_path(task.id), class: 'btn btn-info btn-sm' %></td>
+                <td><%= link_to '編集', edit_task_path(task.id), class: 'btn btn-warning btn-sm' %></td>
+                <td><%= link_to '削除', task_path(task.id), class: 'btn btn-danger btn-sm',method: :delete, data: { confirm: '本当に削除しますか？'} %></td>
+              </tr>
+          <% end %>
+
+        </table>
+      </div>
+    </div>
+
+  <% end %>
+
+<div class='row field'>
+  <div class='col-md-12'>
+    <%= link_to 'タスクを登録順に並び替える', tasks_path %> |
+    <%= link_to 'タスクを終了期限順に並び替える', tasks_path(sort_expired: 'true') %> |
+    <%= link_to 'タスクを優先度順に並び替える', tasks_path(sort_priority: 'true') %>
+  </div>
+</div>

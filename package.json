@@ -1,5 +1,10 @@
 {
   "name": "task_management_system",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "jquery": "^3.4.1"
+  },
+  "devDependencies": {
+    "bootstrap": "4.3.1"
+  }
 }

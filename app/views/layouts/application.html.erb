@@ -10,6 +10,29 @@
   </head>
 
   <body>
-    <%= yield %>
+
+    <div class='container'>
+      <header>
+        <div class='row'>
+          <div class='col-md-12'>
+            <h1>タスク管理システム</h1>
+          </div>
+        </div>
+      </header>
+
+        <%= yield %>
+
+      <footer>
+        <div class='row'>
+          <div class='col-md-12'>
+            <p>
+              作成開始:2019/6/13<br>
+              最終更新:2019/6/25
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
   </body>
 </html>
