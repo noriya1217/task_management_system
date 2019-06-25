@@ -1,51 +1,67 @@
-<%= form_with(model: @task, local: true) do |form| %>
-  <% if @task.errors.any? %>
-    <div id='error_explanation'>
-      <h2><%= pluralize(@task.errors.count, 'error') %></h2> 
+<div class='row field'>
+  <div class='col-md-12'>
+    <%= form_with(model: @task, local: true) do |form| %>
+      <% if @task.errors.any? %>
+        <div id='error_explanation'>
+          <h2><%= pluralize(@task.errors.count, 'error') %></h2> 
 
-      <ul>
-        <% @task.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class='field'>
-    <%= form.label :subject %>
-    <%= form.text_field :subject %>
-  </div>
-
-  <div class='field'>
-    <%= form.label :content %>
-    <%= form.text_field :content %>
-  </div>
-
-  <div class='field'>
-    <%= form.label :expired_at %>
-    <%= form.datetime_select :expired_at, :include_blank => true %>
-  </div>
-
-  <% if action_name == 'new' || action_name == 'edit' %>
-    <div class='field'>
-      <%= form.label :state %>
-      <%= form.radio_button 'state', '未着手' %>未着手
-      <%= form.radio_button 'state', '着手中' %>着手中
-      <% if action_name == 'edit' %>
-        <%= form.radio_button 'state', '完了' %>完了
+          <ul>
+            <% @task.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
       <% end %>
-    </div>
 
-    <div class='field'>
-      <%= form.label :priority %>
-      <%= form.radio_button 'priority', :high %>high
-      <%= form.radio_button 'priority', :middle %>middle
-      <%= form.radio_button 'priority', :low %>low
-    </div>
-  <% end %>
+      <table>
+        <tr class='field'>
+          <th><%= form.label :subject %></th>
+          <td><%= form.text_field :subject %></td>
+        </tr>
 
-  <div class='actions'>
-    <%= form.submit %>
+        <tr class='field'>
+          <th><%= form.label :content %></th>
+          <td><%= form.text_field :content %></td>
+        </tr>
+
+        <tr class='field'>
+          <th><%= form.label :expired_at %></th>
+          <td><%= form.datetime_select :expired_at, :include_blank => true %></td>
+        </tr>
+
+        <% if action_name == 'new' || action_name == 'edit' || action_name == 'create' %>
+          <tr class='field'>
+            <th><%= form.label :state %></th>
+            <td>
+              <%= form.radio_button 'state', '未着手' %>未着手
+              <%= form.radio_button 'state', '着手中' %>着手中
+              <% if action_name == 'edit' %>
+                <%= form.radio_button 'state', '完了' %>完了
+              <% end %>
+            </td>
+          </tr>
+
+          <tr class='field'>
+            <th><%= form.label :priority %></th>
+            <td>
+              <%= form.radio_button 'priority', :high %>high
+              <%= form.radio_button 'priority', :middle %>middle
+              <%= form.radio_button 'priority', :low %>low
+            </td>
+          </tr>
+        <% end %>
+      </table>
+
+      <div class='actions'>
+        <%= form.submit class: 'btn btn-primary btn-sm'%>
+        <% if action_name == 'new' || action_name == 'create' %>
+          <%= link_to '戻る', root_path, class: 'btn btn-secondary btn-sm' %>
+        <% else %>
+          <%= link_to '一覧', tasks_path, class: 'btn btn-success btn-sm' %>
+          <%= link_to '詳細', @task, class: 'btn btn-info btn-sm' %>
+        <% end %>
+      </div>
+
+    <% end %>
   </div>
-
-<% end %>
+</div>
