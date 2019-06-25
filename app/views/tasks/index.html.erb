@@ -1,10 +1,10 @@
-<div class='row'>
+<div class='row main_field'>
   <div class='col-md-12'>
     <p id='notice'><%= notice %></p>
   </div>
 </div>
 
-<div class='row'>
+<div class='row main_field'>
   <div class='col-md-1'></div>
   <div class='col-md-10'>
     <h2>Task一覧ページ</h2>
@@ -13,10 +13,10 @@
 </div>
 
 <!-- (1)Subjectだけ入力 (2)Stateだけ入力 (3)どちらも入力 -->
-<div class='row'>
+<div class='row main_field'>
 
   <div class='col-md-1'></div>
-  <div class='col-md-5'>
+  <div class='col-md-6'>
     <%= search_form_for @q do |f| %>
       <%= f.label :subject %>
       <%= f.search_field :subject_cont %>
@@ -28,7 +28,6 @@
 
   <% unless params[:q].nil? %>
 
-    <div class='col-md-1'></div>
     <div class='col-md-4'>
       <%= page_entries_info @searchs %>
       <%= paginate @searchs %>
@@ -36,8 +35,7 @@
     <div class='col-md-1'></div>
 
 </div>
-
-    <div class='row'>
+    <div class='row main_field'>
       <div class='col-md-1'></div>
       <div class='col-md-10'>
         <h3>検索結果【<%= @search_count %>件ヒットしました】</h3>
@@ -79,14 +77,13 @@
 
   <% else %>
 
-    <div class='col-md-1'></div>
     <div class='col-md-4'>
       <%= page_entries_info @tasks %>
       <%= paginate @tasks %>
     </div>
     <div class='col-md-1'></div>
 </div>
-    <div class='row'>
+    <div class='row main_field'>
       <div class='col-md-1'></div>
       <div class='col-md-10'>
         <h3>タスクALL</h3>
@@ -125,7 +122,7 @@
 
   <% end %>
 
-<div class='row'>
+<div class='row main_field'>
   <div class='col-md-1'></div>
   <div class='col-md-10'>
     <%= link_to 'タスクを登録する', new_task_path %> |
