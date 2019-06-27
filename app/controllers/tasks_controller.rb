@@ -1,15 +1,9 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :require_login
 
   def index
-    if params[:sort_expired].present?
-      @tasks = Task.sort_expired(params[:page])
-    elsif params[:sort_priority].present?
-      @tasks = Task.sort_priority(params[:page])
-    else
-      @tasks = Task.latest(params[:page])
-      # binding.pry
-    end
+    @tasks = params[:sort_key].present? ? Task.sorted_by(params[:sort_key], params[:page]) : Task.latest(params[:page])
 
     unless params[:q].nil?
       if params[:q][:state_eq] == '指定無し'
@@ -38,11 +32,9 @@ class TasksController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @task.update(task_params)
@@ -65,5 +57,12 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:subject, :content, :expired_at, :state, :priority)
+  end
+
+  def require_login
+    unless logged_in?
+      flash[:error] = 'このセクションにアクセスするにはログインして下さい'
+      redirect_to new_session_url
+    end
   end
 end

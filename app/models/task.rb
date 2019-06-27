@@ -7,8 +7,14 @@ class Task < ApplicationRecord
   enum priority:[:high, :middle, :low]
   paginates_per 10
 
-  scope :sort_expired, -> (parameter){ order(expired_at: :desc).page(parameter)  }
-  scope :sort_priority, -> (parameter){ order(priority: :asc).page(parameter)  }
-  scope :latest, -> (parameter){ order(created_at: :desc).page(parameter) }
-  scope :search_ransack, -> (parameter){ ransack(parameter) }
+  scope :sorted_by, -> (_sort_key, _page) do
+    if _sort_key == 'expired_at'
+      order(expired_at: :desc).page(_page)
+    elsif _sort_key == 'priority'
+      order(priority: :asc).page(_page)
+    end
+  end
+
+  scope :latest, -> (_page){ order(created_at: :desc).page(_page) }
+  scope :search_ransack, -> (_page){ ransack(_page) }
 end
