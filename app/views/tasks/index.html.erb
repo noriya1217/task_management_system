@@ -1,8 +1,10 @@
-<div class='row field'>
-  <div class='col-md-12'>
-    <p id='notice'><%= notice %></p>
+<% if action_name == 'create' %>
+  <div class='row field'>
+    <div class='col-md-12'>
+      <p id='notice' class='alert alert-success'><%= notice %></p>
+    </div>
   </div>
-</div>
+<% end %>
 
 <div class='row field'>
   <div class='col-md-12'>

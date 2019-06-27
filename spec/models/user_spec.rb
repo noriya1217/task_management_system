@@ -41,10 +41,73 @@ RSpec.describe User, type: :model do
     expect(user).not_to be_valid
   end
 
+  it 'nameが20文字を超過した場合、バリデーションが通らない' do
+    user = User.new(
+                    name: 'a'*21,
+                    email: 'failure_test@example.com',
+                    password: 'password',
+                    password_confirmation: 'password',
+                    )
+    expect(user).not_to be_valid
+  end
+
   it 'emailが空白の場合、バリデーションが通らない' do
     user = User.new(
                     name: 'tanaka',
                     email: '',
+                    password: 'password',
+                    password_confirmation: 'password',
+                    )
+    expect(user).not_to be_valid
+  end
+
+  it 'emailが255文字を超過した場合、バリデーションが通らない' do
+    user = User.new(
+                    name: 'tanaka',
+                    email: ('a'*252) + '@a.a',
+                    password: 'password',
+                    password_confirmation: 'password',
+                    )
+    expect(user).not_to be_valid
+  end
+
+  it '同じemailが既に登録されていた場合、バリデーションが通らない' do
+    user = User.new(
+                    name: 'tanaka',
+                    email: 'failure_test@example.com',
+                    password: 'password',
+                    password_confirmation: 'password',
+                    )
+    user.save
+    user = User.new(
+                    name: 'tanaka',
+                    email: 'failure_test@example.com',
+                    password: 'password',
+                    password_confirmation: 'password',
+                    )
+    expect(user).not_to be_valid
+  end
+
+  it 'emailが"a@b.c"の形式以外の場合、バリデーションが通らない' do
+    user = User.new(
+                    name: 'tanaka',
+                    email: 'a',
+                    password: 'password',
+                    password_confirmation: 'password',
+                    )
+    expect(user).not_to be_valid
+
+    user = User.new(
+                    name: 'tanaka',
+                    email: '@a.a',
+                    password: 'password',
+                    password_confirmation: 'password',
+                    )
+    expect(user).not_to be_valid
+    
+    user = User.new(
+                    name: 'tanaka',
+                    email: 'a.a',
                     password: 'password',
                     password_confirmation: 'password',
                     )

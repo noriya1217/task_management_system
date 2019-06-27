@@ -14,3 +14,27 @@
  *= require_tree .
  *= require_self
  */
+
+th,td{
+  padding: 5px;
+}
+
+header{
+  background-color: #AEC4E5;
+  padding: 10px;
+}
+
+.top_menu{
+  text-align: center;
+}
+
+.top_menu a {
+  display: block;
+  padding: 10px;
+}
+
+footer{
+  background-color: #AEC4E5;
+  text-align: center;
+  padding: 10px;
+}
