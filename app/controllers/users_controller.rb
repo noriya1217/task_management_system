@@ -13,7 +13,12 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    if current_user.id == params[:id].to_i
+      @user = User.find(params[:id])
+    else
+      flash[:error] = '他ユーザーのProfileは閲覧出来ません'
+      redirect_to tasks_path
+    end
   end
 
   private

@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :require_login, only: [:new, :create]
+
   def new; end
 
   def create
@@ -16,5 +18,14 @@ class SessionsController < ApplicationController
     session.delete(:user_id)
     flash[:notice] = 'ログアウトしました'
     redirect_to new_session_path
+  end
+
+  private
+
+  def require_login
+    if logged_in?
+      flash[:error] = 'このセクションにアクセスするにはログアウトして下さい'
+      redirect_to tasks_path
+    end
   end
 end

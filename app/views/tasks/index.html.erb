@@ -15,25 +15,30 @@
 <!-- (1)Subjectだけ入力 (2)Stateだけ入力 (3)どちらも入力 -->
 <div class='row field'>
 
-  <div class='col-md-1'></div>
-  <div class='col-md-6'>
+  <div class='col-md-12'>
     <%= search_form_for @q do |f| %>
       <%= f.label :subject %>
       <%= f.search_field :subject_cont %>
       <%= f.label :state %>
       <%= f.select :state_eq, ['指定無し','未着手','着手中','完了'] %>
+      <%= f.label :user_id %>
+      <%= f.select :user_id_eq, ["全てのタスク", "#{current_user.name}のタスク"] %>
       <%= f.submit 'Search', class: 'btn btn-primary btn-sm' %>
     <% end %>
+  </div>
+
+  <% paginations = params[:q].nil? ? @tasks : @searchs %>
+
+  <div class='col-md-12'>
+    <%= page_entries_info paginations %>
+    <%= paginate paginations, window: 2 %>
+  </div>
+
+  <div class='col-md-12'>
     <%= link_to 'タスクを新規登録する', new_task_path , class: 'btn btn-success btn-sm field'%>
   </div>
 
   <% unless params[:q].nil? %>
-
-    <div class='col-md-4'>
-      <%= page_entries_info @searchs %>
-      <%= paginate @searchs, window: 2 %>
-    </div>
-    <div class='col-md-1'></div>
 
 </div>
     <div class='row field'>
@@ -43,6 +48,7 @@
           <table border='1'>
 
             <tr>
+              <th><%= sort_link(@q, :name) %></th>
               <th><%= sort_link(@q, :subject) %></th>
               <th><%= sort_link(@q, :content) %></th>
               <th><%= sort_link(@q, :expired_at) %></th>
@@ -59,6 +65,7 @@
               <% else %>
                 <tr class='task_done'>
               <% end %>
+                <td><%= search.user.name %></td>
                 <td><%= search.subject %></td>
                 <td><%= search.content %></td>
                 <td><%= search.expired_at %></td>
@@ -77,17 +84,13 @@
 
   <% else %>
 
-    <div class='col-md-4'>
-      <%= page_entries_info @tasks %>
-      <%= paginate @tasks, window: 2 %>
-    </div>
-    <div class='col-md-1'></div>
 </div>
     <div class='row field'>
       <div class='col-md-12'>
         <h3>タスクALL</h3>
         <table border='1'>
           <tr>
+            <th><%= sort_link(@q, :name) %></th>
             <th><%= sort_link(@q, :subject) %></th>
             <th><%= sort_link(@q, :content) %></th>
             <th><%= sort_link(@q, :expired_at) %></th>
@@ -103,6 +106,7 @@
             <% else %>
               <tr class='task_done'>
             <% end %>
+                <td><%= task.user.name %></td>
                 <td><%= task.subject %></td>
                 <td><%= task.content %></td>
                 <td><%= task.expired_at %></td>
