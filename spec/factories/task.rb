@@ -16,4 +16,10 @@ FactoryBot.define do
     content { 'hogehogehoge' }
     user_id { User.first.id }
   end
+
+  factory :fourth_task, class: Task do
+    subject { 'test_task_04' }
+    content { 'piyopiyopiyo' }
+    user_id { User.last.id }
+  end
 end

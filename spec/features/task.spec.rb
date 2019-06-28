@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'タスク管理システム', type: :feature do
+RSpec.feature 'タスク管理システム(task)', type: :feature do
 
   background do
     FactoryBot.create(:user)
@@ -191,6 +191,17 @@ RSpec.feature 'タスク管理システム', type: :feature do
     trs = page.all('tr')
     # backgroundにて最後から３つのデータは既に作成されているため
     expect(trs[trs.length - 4]).to have_content '成功テスト'
+  end
+
+  scenario '現在ログインしているユーザーのタスクだけを絞り込むテスト' do
+    FactoryBot.create(:second_user)
+    FactoryBot.create(:fourth_task)
+    visit tasks_path
+    select 'hogeのタスク', from: 'q_user_id_eq'
+    click_button 'Search'
+    expect(page).not_to have_content 'test_task_04'
+    expect(page).not_to have_content 'piyopiyopiyo'
+    save_and_open_page
   end
 
 end
