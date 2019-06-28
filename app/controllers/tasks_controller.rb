@@ -67,7 +67,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:subject, :content, :expired_at, :state, :priority)
+    params.require(:task).permit(:subject, :content, :expired_at, :state, :priority, :user_id)
   end
 
   def require_login
