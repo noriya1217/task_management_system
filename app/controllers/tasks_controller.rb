@@ -1,27 +1,32 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :require_login
 
   def index
-    if params[:sort_expired].present?
-      @tasks = Task.sort_expired(params[:page])
-    elsif params[:sort_priority].present?
-      @tasks = Task.sort_priority(params[:page])
-    else
-      @tasks = Task.latest(params[:page])
-      # binding.pry
+    @tasks = params[:sort_key].present? ? Task.sorted_by(params[:sort_key], params[:page]) : Task.latest(params[:page])
+    unless params[:q].nil? || params[:q][:s].present?
+      params[:q][:user_id_eq] =
+        if params[:q][:user_id_eq] == '全てのタスク'
+          nil
+        elsif params[:q][:user_id_eq] == "#{current_user.name}のタスク"
+          current_user.id
+        end
+
+      params[:q][:state_eq] = nil if params[:q][:state_eq] == '指定無し'
+      params[:q][:subject_cont] = nil if params[:q][:subject_cont].blank?
+      params[:q] = nil if params[:q][:state_eq].nil? && params[:q][:user_id_eq].nil? && params[:q][:subject_cont].nil?
     end
 
-    unless params[:q].nil?
-      if params[:q][:state_eq] == '指定無し'
-        params[:q][:state_eq] = nil
-        params[:q] = nil if params[:q][:subject_cont].blank?
-      end
-    end
+    # index画面にて表のNameをSortする機能を実装するにはUserテーブルの操作が必要
+    # params[:q][:s] == 'name ask' || params[:q][:s] == 'name desk'
+    # 要件には無いが、使えない状態はよくないので、後ほど実装方法考える。
 
+    @q = User.ransack(params[:q])
     @q = Task.search_ransack(params[:q])
     # @q.resultをモデルに移行したいが、上手くいかない。余裕があれば考える。
     @searchs = @q.result(distinct: true).page(params[:page])
     @search_count = @q.result(distinct: true).count
+
   end
 
   def new
@@ -38,11 +43,9 @@ class TasksController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @task.update(task_params)
@@ -64,6 +67,13 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:subject, :content, :expired_at, :state, :priority)
+    params.require(:task).permit(:subject, :content, :expired_at, :state, :priority, :user_id)
+  end
+
+  def require_login
+    unless logged_in?
+      flash[:error] = 'このセクションにアクセスするにはログインして下さい'
+      redirect_to new_session_url
+    end
   end
 end

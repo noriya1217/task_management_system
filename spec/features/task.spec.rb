@@ -1,13 +1,18 @@
 require 'rails_helper'
-# save_and_open_page
 
-RSpec.feature 'タスク管理システム', type: :feature do
+RSpec.feature 'タスク管理システム(task)', type: :feature do
 
   background do
+    FactoryBot.create(:user)
     FactoryBot.create(:task)
     FactoryBot.create(:second_task)
     FactoryBot.create(:third_task)
     page.driver.browser.authorize('hoge', 'piyo')
+    visit root_path
+    fill_in 'session_email', with: 'hoge@example.com'
+    fill_in 'session_password', with: 'password'
+    fill_in 'session_password_confirmation', with: 'password'
+    click_button 'ログイン'
   end
 
   scenario 'タスク一覧のテスト' do
@@ -175,18 +180,28 @@ RSpec.feature 'タスク管理システム', type: :feature do
   end
 
   scenario 'タスク一覧のページネーションテスト(kaminari)' do
-    Task.create!(subject: "成功テスト", content: "成功テスト")
+    Task.create!(subject: "成功テスト", content: "成功テスト", user_id: User.first.id)
     10.times do
       FactoryBot.create(:task)
       FactoryBot.create(:second_task)
       FactoryBot.create(:third_task)
     end
     visit tasks_path
-    # データ数34件、1ページ20件表示している
-    click_link '4'
+    click_link '»' # ページネーションの最後
     trs = page.all('tr')
     # backgroundにて最後から３つのデータは既に作成されているため
     expect(trs[trs.length - 4]).to have_content '成功テスト'
+  end
+
+  scenario '現在ログインしているユーザーのタスクだけを絞り込むテスト' do
+    FactoryBot.create(:second_user)
+    FactoryBot.create(:fourth_task)
+    visit tasks_path
+    select 'hogeのタスク', from: 'q_user_id_eq'
+    click_button 'Search'
+    expect(page).not_to have_content 'test_task_04'
+    expect(page).not_to have_content 'piyopiyopiyo'
+    save_and_open_page
   end
 
 end

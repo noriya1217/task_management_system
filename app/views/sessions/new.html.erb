@@ -1,0 +1,24 @@
+<div class='row fienld'>
+  <div class='col-md-12'>
+    <h2>ログイン画面</h2>
+  </div>
+</div>
+
+<!-- ログイン失敗時のエラー処理 -->
+<div class='row field'>
+  <div class='col-md-12'>
+  </div>
+</div>
+
+<div class='row fielf'>
+  <div class='col-md-12'>
+    <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
+      <table>
+        <tr><th><%= f.label :email %></th><td><%= f.email_field :email %></td></tr>
+        <tr><th><%= f.label :password %></th><td><%= f.password_field :password %></td></tr>
+        <tr><th><%= f.label :password_confirmation %></th><td><%= f.password_field :password_confirmation %></td></tr>
+        <tr><th><%= f.submit 'ログイン', class: 'btn btn-primary btn-sm' %></th></tr>
+      </table>
+    <% end %>
+  </div>
+</div>
