@@ -3,7 +3,6 @@ class Admin::UsersController < ApplicationController
   before_action :set_admin_user, only: [:edit, :update, :show, :destroy]
 
   def index
-    @admins = Admin.all
     @users = User.latest
   end
 
@@ -15,8 +14,9 @@ class Admin::UsersController < ApplicationController
   def create
     params[:user][:admin_attributes] = nil if params[:user][:admin_attributes][:user_id] == '無'
     @user = User.new(user_params)
+    # ユーザー新規登録にて管理者権限を'有'の時User.last.id + 1をparams[:user][:admin_attributes][:user_id]に入れてみたが、Admin.newに入れるのに失敗する。
+    # しかし、@user.saveを実行すると対応Adminテーブルにもsaveしたuserのidが入っている。これはreferencesされているから？要調査。
     if @user.save
-      # Admin.create(user_id: @user.id) unless params[:user][:admin].nil?
       redirect_to admin_users_path, notice: 'アカウント作成しました'
     else
       render 'new'
@@ -27,8 +27,12 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
+    if params[:user][:admin_attributes][:user_id] == '無'
+      @user.admin.destroy 
+      params[:user][:admin_attributes] = nil
+    end
+
     if @user.update(user_params)
-      # Admin.destroy(user_id: @user.id) unless params[:user][:admin].nil
       redirect_to admin_users_path, notice: "ID#{@user.id}番のユーザーを編集しました"
     else
       flash.now[:danger] = "ID#{@user.id}番のユーザーの編集に失敗しました"
@@ -38,6 +42,10 @@ class Admin::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+  end
+
+  def destroy
+    @user.destroy
   end
 
   private
@@ -54,7 +62,10 @@ class Admin::UsersController < ApplicationController
 
   def set_admin_user
     @user = User.find(params[:id])
-    @admin = Admin.find_by(user_id: params[:id])
+    if @user.admin.nil?
+      @user.build_admin
+      @user.admin.user_id = nil
+    end
   end
 
   def require_admin

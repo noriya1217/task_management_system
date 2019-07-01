@@ -28,11 +28,7 @@
 
         <% @users.each do |user| %>
           <tr>
-            <th>
-              <% @admins.each do |admin| %>
-                <% if user.id == admin.user_id %>★<% end %>
-              <% end %>
-            </th>
+            <th><% unless user.admin.nil? %>★<% end %></th>
             <td><%= user.id %></td>
             <td><%= user.name %></td>
             <td><%= user.email %></td>
