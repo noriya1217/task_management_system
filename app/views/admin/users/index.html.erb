@@ -1,1 +1,49 @@
-<h2>管理画面のUser一覧画面</h2>
+<div class='admin_backcolor'>
+  <div class='row field'>
+    <div class='col-md-12'>
+      <h2>管理画面【User一覧画面】</h2>
+    </div>
+  </div>
+
+  <div class='row field'>
+    <div class='col-md-12'>
+      <%= link_to 'ユーザーを新規登録する', new_admin_user_path , class: 'btn btn-success btn-sm field'%>
+    </div>
+  </div>
+
+  <!-- 管理者権限を所有しているユーザー一覧をここに表示する -->
+
+  <!-- ransackとkaminari -->
+  <div class='row field'>
+    <div class='col-md-12'>
+      <table border=1>
+        <tr>
+          <th>admin</th>
+          <td>id</td>
+          <td>name</td>
+          <td>email</td>
+          <td>created_at</td>
+          <td>updated_at</td>
+        </tr>
+
+        <% @users.each do |user| %>
+          <tr>
+            <th>
+              <% @admins.each do |admin| %>
+                <% if user.id == admin.user_id %>★<% end %>
+              <% end %>
+            </th>
+            <td><%= user.id %></td>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td><%= user.created_at %></td>
+            <td><%= user.updated_at %></td>
+            <td>詳細</td>
+            <td>編集</td>
+            <td>削除</td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>

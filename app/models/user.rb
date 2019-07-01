@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :books
+  has_one :admin
 
   has_secure_password
   before_validation { email&.downcase! }
