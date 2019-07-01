@@ -1,4 +1,6 @@
 class Admin::UsersController < ApplicationController
+  before_action :require_admin
+
   def index
     @admins = Admin.all
     @users = User.all
@@ -37,5 +39,12 @@ class Admin::UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def require_admin
+    unless Admin.find_by(user_id: current_user.id)
+      flash[:error] = 'このセクションにアクセス出来るのは、管理者権限のあるユーザーのみです'
+      redirect_to tasks_path
+    end
   end
 end
