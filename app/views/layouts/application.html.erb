@@ -20,7 +20,15 @@
           </div>
 
           <% if logged_in? %>
-            <div class='col-md-1 top_menu'></div>
+
+            <% if Admin.find_by(user_id: current_user.id) %>
+              <div class='col-md-1 top_menu'>
+                <%= link_to 'Admin', admin_users_path %>
+              </div>
+            <% else %>
+              <div class='col-md-1 top_menu'></div>
+            <% end %>
+            
             <div class='col-md-1 top_menu'>
               <%= link_to 'Task', tasks_path %>
             </div>

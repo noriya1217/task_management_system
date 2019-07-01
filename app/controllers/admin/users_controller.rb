@@ -1,22 +1,22 @@
 class Admin::UsersController < ApplicationController
   before_action :require_admin
+  before_action :set_admin_user, only: [:edit, :update, :show, :destroy]
 
   def index
     @admins = Admin.all
-    @users = User.all
+    @users = User.latest
   end
 
   def new
-    @admin = Admin.new
     @user = User.new
+    @user.build_admin
   end
 
   def create
+    params[:user][:admin_attributes] = nil if params[:user][:admin_attributes][:user_id] == '無'
     @user = User.new(user_params)
     if @user.save
-      unless params[:user][:admin] == '無'
-        Admin.create(user_id: @user.id)
-      end
+      # Admin.create(user_id: @user.id) unless params[:user][:admin].nil?
       redirect_to admin_users_path, notice: 'アカウント作成しました'
     else
       render 'new'
@@ -24,11 +24,16 @@ class Admin::UsersController < ApplicationController
   end
 
   def edit
-
   end
 
   def update
-
+    if @user.update(user_params)
+      # Admin.destroy(user_id: @user.id) unless params[:user][:admin].nil
+      redirect_to admin_users_path, notice: "ID#{@user.id}番のユーザーを編集しました"
+    else
+      flash.now[:danger] = "ID#{@user.id}番のユーザーの編集に失敗しました"
+      render 'edit'
+    end
   end
 
   def show
@@ -38,7 +43,18 @@ class Admin::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(
+      :name,
+      :email,
+      :password,
+      :password_confirmation,
+      admin_attributes: %i[id user_id]
+      )
+  end
+
+  def set_admin_user
+    @user = User.find(params[:id])
+    @admin = Admin.find_by(user_id: params[:id])
   end
 
   def require_admin

@@ -22,20 +22,22 @@
 
   <div class= 'row field'>
     <div class='col-md-12'>
-      <%= form_with(model: @user, url: admin_users_path, method: :post, local: true) do |f| %>
+      <%= form_with(model: @user, url: admin_users_path, method: :post, local: true) do |user| %>
         <table>
-          <tr><th><%= f.label :name %></th><td><%= f.text_field :name %></td></tr>
-          <tr><th><%= f.label :email %></th><td><%= f.email_field :email %></td></tr>
-          <tr><th><%= f.label :password %></th><td><%= f.password_field :password %></td></tr>
-          <tr><th><%= f.label :password_confirmation %></th><td><%= f.password_field :password_confirmation %></td></tr>
-          <tr>
-            <th>管理者権限</th>
-            <td>
-              <label><%= f.radio_button :admin, '有' %>有</label>
-              <label><%= f.radio_button :admin, '無', checked: true %>無</label>
-            </td>
-          </tr>
-          <tr><th><%= f.submit 'アカウント登録する', class: 'btn btn-primary btn-sm' %></th></tr>
+          <tr><th><%= user.label :name %></th><td><%= user.text_field :name %></td></tr>
+          <tr><th><%= user.label :email %></th><td><%= user.email_field :email %></td></tr>
+          <tr><th><%= user.label :password %></th><td><%= user.password_field :password %></td></tr>
+          <tr><th><%= user.label :password_confirmation %></th><td><%= user.password_field :password_confirmation %></td></tr>
+          <%= user.fields_for :admin do |admin| %>
+            <tr>
+              <th>管理者権限</th>
+              <td>
+                <label><%= admin.radio_button :user_id, '有' %>有</label>
+                <label><%= admin.radio_button :user_id, '無', checked: true %>無</label>
+              </td>
+            </tr>
+          <% end %>
+          <tr><th><%= user.submit 'アカウント登録する', class: 'btn btn-primary btn-sm' %></th></tr>
         </table>
       <% end %>
     </div>
