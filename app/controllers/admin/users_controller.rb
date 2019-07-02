@@ -23,8 +23,7 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if params[:user][:admin_attributes][:user_id] == '無'
@@ -40,12 +39,12 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  def show
-    @user = User.find(params[:id])
-  end
+  def show; end
 
   def destroy
+    flash[:notice] = "ID#{@user.id}番のユーザーを削除しました"
     @user.destroy
+    redirect_to admin_users_path
   end
 
   private
@@ -69,9 +68,14 @@ class Admin::UsersController < ApplicationController
   end
 
   def require_admin
-    unless Admin.find_by(user_id: current_user.id)
-      flash[:error] = 'このセクションにアクセス出来るのは、管理者権限のあるユーザーのみです'
-      redirect_to tasks_path
+    if logged_in?
+      unless Admin.find_by(user_id: current_user.id)
+        flash[:error] = 'このセクションにアクセス出来るのは、管理者権限のあるユーザーのみです'
+        redirect_to tasks_path
+      end
+    else
+      flash[:error] = 'ログインしていたアカウントが見つかりません'
+      redirect_to root_path
     end
   end
 end

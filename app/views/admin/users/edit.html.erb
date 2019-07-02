@@ -42,11 +42,12 @@
               </td>
             </tr>
           <% end %>
-          <tr><th><%= user.submit 'アカウント更新する', class: 'btn btn-primary btn-sm' %></th></tr>
         </table>
+        <%= user.submit 'アカウント更新する', class: 'btn btn-primary btn-sm' %>
+        <%= link_to 'ユーザー一覧', admin_users_path, class: 'btn btn-success btn-sm' %>
+        <%= link_to 'ユーザー詳細', admin_user_path(@user.id), class: 'btn btn-info btn-sm' %>
       <% end %>
     </div>
   </div>
 
-  <%#= render 'form' %>
 </div>

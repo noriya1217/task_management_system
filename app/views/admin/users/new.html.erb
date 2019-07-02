@@ -37,8 +37,9 @@
               </td>
             </tr>
           <% end %>
-          <tr><th><%= user.submit 'アカウント登録する', class: 'btn btn-primary btn-sm' %></th></tr>
         </table>
+        <%= user.submit 'アカウント登録する', class: 'btn btn-primary btn-sm' %>
+        <%= link_to 'ユーザー一覧画面',admin_users_path ,class: 'btn btn-success btn-sm'%>
       <% end %>
     </div>
   </div>
