@@ -74,7 +74,7 @@ class Admin::UsersController < ApplicationController
     if logged_in?
       unless Admin.find_by(user_id: current_user.id)
         flash[:error] = 'このセクションにアクセス出来るのは、管理者権限のあるユーザーのみです'
-        redirect_to tasks_path
+        render :layout => 'admin/error', action: 'error'
       end
     else
       flash[:error] = 'ログインしていたアカウントが見つかりません'
