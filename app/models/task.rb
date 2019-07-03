@@ -17,4 +17,5 @@ class Task < ApplicationRecord
 
   scope :latest, -> (_page){ order(created_at: :desc).page(_page) }
   scope :search_ransack, -> (_page){ ransack(_page) }
+  scope :user_task_list, -> (user_id){ where(user_id: user_id).order(created_at: :desc) }
 end

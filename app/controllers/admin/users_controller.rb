@@ -39,7 +39,9 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @tasks = Task.user_task_list(@user.id)
+  end
 
   def destroy
     flash[:notice] = "ID#{@user.id}番のユーザーを削除しました"
