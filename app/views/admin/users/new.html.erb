@@ -1,0 +1,48 @@
+<div class='admin_backcolor'>
+  <div class='row field'>
+    <div class='col-md-12'>
+      <h2>管理画面【ユーザー新規登録画面】</h2>
+    </div>
+  </div>
+
+  <div class='row field'>
+    <div class='col-md-12'>
+      <% if @user.errors.any? %>
+        <div id='error_explanation'>
+          <h2>このユーザーを保存出来ません【<%= pluralize(@user.errors.count, 'error') %>】</h2>
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class= 'row field'>
+    <div class='col-md-12'>
+      <%= form_with(model: @user, url: admin_users_path, method: :post, local: true) do |user| %>
+        <table>
+          <tr><th><%= user.label :name %></th><td><%= user.text_field :name %></td></tr>
+          <tr><th><%= user.label :email %></th><td><%= user.email_field :email %></td></tr>
+          <tr><th><%= user.label :password %></th><td><%= user.password_field :password %></td></tr>
+          <tr><th><%= user.label :password_confirmation %></th><td><%= user.password_field :password_confirmation %></td></tr>
+          <%= user.fields_for :admin do |admin| %>
+            <tr>
+              <th>管理者権限</th>
+              <td>
+                <label><%= admin.radio_button :user_id, '有' %>有</label>
+                <label><%= admin.radio_button :user_id, '無', checked: true %>無</label>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+        <%= user.submit 'アカウント登録する', class: 'btn btn-primary btn-sm' %>
+        <%= link_to 'ユーザー一覧画面',admin_users_path ,class: 'btn btn-success btn-sm'%>
+      <% end %>
+    </div>
+  </div>
+
+  <%#= render 'form' %>
+</div>

@@ -1,0 +1,43 @@
+<div class='admin_backcolor'>
+  <div class='row field'>
+    <div class='col-md-12'>
+      <h2>管理画面【ユーザー一覧画面】</h2>
+    </div>
+  </div>
+
+  <div class='row field'>
+    <div class='col-md-12'>
+      <%= link_to 'ユーザーを新規登録する', new_admin_user_path , class: 'btn btn-success btn-sm field'%>
+    </div>
+  </div>
+
+  <!-- 管理者権限を所有しているユーザー一覧をここに表示する -->
+
+  <!-- ransackとkaminari -->
+  <div class='row field'>
+    <div class='col-md-12'>
+      <table border=1>
+        <tr>
+          <th>admin</th>
+          <td>id</td>
+          <td>name</td>
+          <td>email</td>
+          <td>task数</td>
+        </tr>
+
+        <% @users.each do |user| %>
+          <tr>
+            <th><% unless user.admin.nil? %>★<% end %></th>
+            <td><%= user.id %></td>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td><%= user.tasks.count %></td>
+            <td><%= link_to '詳細', admin_user_path(user.id), class: 'btn btn-info btn-sm' %></td>
+            <td><%= link_to '編集', edit_admin_user_path(user.id), class: 'btn btn-warning btn-sm' %></td>
+            <td><%= link_to '削除', admin_user_path(user.id), class: 'btn btn-danger btn-sm',method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
