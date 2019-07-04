@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'タスク管理システム(admin)', type: :feature do
+RSpec.feature 'タスク管理システム(error)', type: :feature do
 
   background do
     FactoryBot.create(:user)
@@ -62,14 +62,12 @@ RSpec.feature 'タスク管理システム(admin)', type: :feature do
   scenario 'ユーザー削除のテスト' do
     FactoryBot.create(:second_user)
     click_link 'Admin'
+    save_and_open_page
     # ログインしていないユーザーを削除
     all('tr')[2].click_link '削除'
     expect(page).not_to have_content 'piyo'
     expect(page).not_to have_content 'piyo@example.com'
     expect(page).to have_content 'ユーザーを削除しました'
-    FactoryBot.create(:second_user)
-    FactoryBot.create(:second_admin)
-    click_link 'Admin'
     # ログインしているユーザーを削除
     all('tr')[1].click_link '削除'
     expect(page).to have_content 'ログイン画面'
@@ -93,11 +91,5 @@ RSpec.feature 'タスク管理システム(admin)', type: :feature do
     all('tr')[1].click_link '詳細'
     expect(page).to have_content 'test_task_01'
     expect(page).to have_content 'testtesttest'
-  end
-
-  scenario '管理者権限を持つユーザーが１人しかいない場合は、管理者権限を持つユーザーを削除することが出来ないテスト' do
-    click_link 'Admin'
-    all('tr')[1].click_link '削除'
-    expect(page).to have_content '管理者権限を持つユーザーを0人にすることは出来ません'
   end
 end

@@ -180,7 +180,7 @@ RSpec.feature 'タスク管理システム(task)', type: :feature do
   end
 
   scenario 'タスク一覧のページネーションテスト(kaminari)' do
-    Task.create!(subject: "成功テスト", content: "成功テスト", user_id: User.first.id)
+    Task.create!(subject: "成功テスト", content: "成功テスト", expired_at: Time.current, user_id: User.first.id)
     10.times do
       FactoryBot.create(:task)
       FactoryBot.create(:second_task)
@@ -201,7 +201,6 @@ RSpec.feature 'タスク管理システム(task)', type: :feature do
     click_button 'Search'
     expect(page).not_to have_content 'test_task_04'
     expect(page).not_to have_content 'piyopiyopiyo'
-    save_and_open_page
   end
 
 end
