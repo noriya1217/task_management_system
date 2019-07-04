@@ -28,7 +28,9 @@ class Admin::UsersController < ApplicationController
 
   def update
     if params[:user][:admin_attributes][:user_id] == '無'
-      @user.admin.destroy 
+      unless @user.admin.destroy
+        flash[:danger] = '管理者権限を持つユーザーを0人にすることは出来ません'
+      end
       params[:user][:admin_attributes] = nil
     end
 
@@ -45,8 +47,11 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-    flash[:notice] = "ID#{@user.id}番のユーザーを削除しました"
-    @user.destroy
+    if @user.destroy
+      flash[:notice] = "ID#{@user.id}番のユーザーを削除しました"
+    else
+      flash[:danger] = '管理者権限を持つユーザーを0人にすることは出来ません'
+    end
     redirect_to admin_users_path
   end
 
