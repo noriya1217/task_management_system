@@ -1,53 +1,51 @@
-<div class='admin_backcolor'>
-  <div class='row field'>
-    <div class='col-md-12'>
-      <h2>管理画面【ユーザー詳細画面】</h2>
-      <h3><%= @user.name %>のページ</h3>
-      <table border=1>
-        <tr><th>メールアドレス:</th><td><%= @user.email %></td></tr>
-        <tr>
-          <th>管理者権限：</th>
-          <td>
-            <% if @user.admin.user_id.nil? %>
-              無
-            <% else %>
-              有
-            <% end %>
-          </td>
-        </tr>
-      </table>
-      <br>
-      <h2>登録したタスク一覧 / <%= @tasks.count %>件</h2>
-      <table border=1>
-        <tr>
-          <th>Subject</th>
-          <th>Content</th>
-          <th>Created_at</th>
-          <th>Expired_at</th>
-          <th>State</th>
-          <th>priority</th>
-        </tr>
-
-        <% @tasks.each do |task| %>
-          <% if task.state == '未着手' %>
-            <tr class='task_not_running'>
-          <% elsif task.state == '着手中' %>
-            <tr class='task_running'>
+<div class='row field'>
+  <div class='col-md-12'>
+    <h2>管理画面【ユーザー詳細画面】</h2>
+    <h3><%= @user.name %>のページ</h3>
+    <table border=1>
+      <tr><th>メールアドレス:</th><td><%= @user.email %></td></tr>
+      <tr>
+        <th>管理者権限：</th>
+        <td>
+          <% if @user.admin.user_id.nil? %>
+            無
           <% else %>
-            <tr class='task_done'>
+            有
           <% end %>
-              <td><%= task.subject %></td>
-              <td><%= task.content %></td>
-              <td><%= task.created_at%></td>
-              <td><%= task.expired_at %></td>
-              <td><%= task.state %></td>
-              <td><%= task.priority %></td>
-            </tr>
-          <% end %>
-      </table>
-      <br>
-      <%= link_to 'ユーザー一覧', admin_users_path, class: 'btn btn-success btn-sm' %>
-      <%= link_to 'ユーザー編集', edit_admin_user_path(@user.id), class: 'btn btn-warning btn-sm' %>
-    </div>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <h2>登録したタスク一覧 / <%= @tasks.count %>件</h2>
+    <table border=1>
+      <tr>
+        <th>Subject</th>
+        <th>Content</th>
+        <th>Created_at</th>
+        <th>Expired_at</th>
+        <th>State</th>
+        <th>priority</th>
+      </tr>
+
+      <% @tasks.each do |task| %>
+        <% if task.state == '未着手' %>
+          <tr class='task_not_running'>
+        <% elsif task.state == '着手中' %>
+          <tr class='task_running'>
+        <% else %>
+          <tr class='task_done'>
+        <% end %>
+            <td><%= task.subject %></td>
+            <td><%= task.content %></td>
+            <td><%= task.created_at%></td>
+            <td><%= task.expired_at %></td>
+            <td><%= task.state %></td>
+            <td><%= task.priority %></td>
+          </tr>
+        <% end %>
+    </table>
+    <br>
+    <%= link_to 'ユーザー一覧', admin_users_path, class: 'btn btn-success btn-sm' %>
+    <%= link_to 'ユーザー編集', edit_admin_user_path(@user.id), class: 'btn btn-warning btn-sm' %>
   </div>
 </div>

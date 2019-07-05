@@ -14,11 +14,12 @@ class Admin::UsersController < ApplicationController
   def create
     params[:user][:admin_attributes] = nil if params[:user][:admin_attributes][:user_id] == '無'
     @user = User.new(user_params)
-    # ユーザー新規登録にて管理者権限を'有'の時User.last.id + 1をparams[:user][:admin_attributes][:user_id]に入れてみたが、Admin.newに入れるのに失敗する。
+    # TODO: ユーザー新規登録にて管理者権限を'有'の時User.last.id + 1をparams[:user][:admin_attributes][:user_id]に入れてみたが、Admin.newに入れるのに失敗する。
     # しかし、@user.saveを実行すると対応Adminテーブルにもsaveしたuserのidが入っている。これはreferencesされているから？要調査。
     if @user.save
       redirect_to admin_users_path, notice: 'アカウント作成しました'
     else
+      @user.build_admin
       render 'new'
     end
   end
@@ -27,7 +28,9 @@ class Admin::UsersController < ApplicationController
 
   def update
     if params[:user][:admin_attributes][:user_id] == '無'
-      @user.admin.destroy 
+      unless @user.admin.destroy
+        flash[:danger] = '管理者権限を持つユーザーを0人にすることは出来ません'
+      end
       params[:user][:admin_attributes] = nil
     end
 
@@ -44,8 +47,11 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-    flash[:notice] = "ID#{@user.id}番のユーザーを削除しました"
-    @user.destroy
+    if @user.destroy
+      flash[:notice] = "ID#{@user.id}番のユーザーを削除しました"
+    else
+      flash[:danger] = '管理者権限を持つユーザーを0人にすることは出来ません'
+    end
     redirect_to admin_users_path
   end
 
@@ -73,7 +79,7 @@ class Admin::UsersController < ApplicationController
     if logged_in?
       unless Admin.find_by(user_id: current_user.id)
         flash[:error] = 'このセクションにアクセス出来るのは、管理者権限のあるユーザーのみです'
-        redirect_to tasks_path
+        render :layout => 'admin/error', action: 'error'
       end
     else
       flash[:error] = 'ログインしていたアカウントが見つかりません'

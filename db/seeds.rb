@@ -1,3 +1,13 @@
+1.times do |n|
+  User.create!(
+    name: 'admin',
+    email: 'admin@admin.admin',
+    password: 'password',
+    password_confirmation: 'password',
+    )
+  Admin.create!(user_id: User.last.id)
+end
+
 10.times do |n|
   name = Faker::Pokemon.name
   email = Faker::Internet.email

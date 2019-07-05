@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Admin - TaskManagementSystem</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+
+    <div class='container'>
+      <header class='admin_backcolor'>
+        <div class='row'>
+
+          <div class='col-md-8'>
+              <h1>タスク管理システム</h1>
+          </div>
+
+          <% if logged_in? %>
+
+            <% if Admin.find_by(user_id: current_user.id) %>
+              <div class='col-md-1 top_menu'>
+                <%= link_to 'Admin', admin_users_path %>
+              </div>
+            <% else %>
+              <div class='col-md-1 top_menu'></div>
+            <% end %>
+
+            <div class='col-md-1 top_menu'>
+              <%= link_to 'Task', tasks_path %>
+            </div>
+            <div class='col-md-1 top_menu'>
+              <%= link_to 'Profile', user_path(current_user.id) %>
+            </div>
+            <div class='col-md-1 top_menu'>
+              <%= link_to 'Logout', session_path(current_user.id), method: :delete %>
+            </div>
+          <% else %>
+            <div class='col-md-1 top_menu'></div>
+            <div class='col-md-2 top_menu'>
+              <%= link_to 'Sign up', new_user_path %>
+            </div>
+            <div class='col-md-1 top_menu'>
+              <%= link_to 'Login', new_session_path %>
+            </div>
+          <% end %>
+
+        </div>
+
+      </header>
+
+      <div class='row'>
+        <div class='col-md-12'>
+          <% flash.each do |key, value| %>
+            <% alert_color = key == 'notice' ? 'alert-success' : 'alert-danger' %>
+            <%= content_tag(:div, value, class: "#{key} alert #{alert_color}") %>
+          <% end %>
+        </div>
+      </div>
+
+        <%= yield %>
+
+      <footer class='admin_backcolor'>
+        <div class='row'>
+          <div class='col-md-12'>
+            <p>
+              作成開始:2019/6/13
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+  </body>
+</html>

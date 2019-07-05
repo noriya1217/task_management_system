@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TaskManagementSystem</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta http-equiv="refresh" content="5;URL=./../../">
+  </head>
+
+  <body>
+
+    <div class='container'>
+
+      <div class='row'>
+        <div class='col-md-12'>
+          <% flash.each do |key, value| %>
+            <% alert_color = key == 'notice' ? 'alert-success' : 'alert-danger' %>
+            <%= content_tag(:div, value, class: "#{key} alert #{alert_color}") %>
+          <% end %>
+        </div>
+      </div>
+
+        <%= yield %>
+
+
+    </div>
+
+  </body>
+</html>
