@@ -11,6 +11,7 @@ Rails.application.routes.draw do
         get :error
       end
     end
+    resources :labels
   end
   resources :sessions, only:[:new, :create, :destroy]
 end
