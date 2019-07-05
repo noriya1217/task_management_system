@@ -32,7 +32,8 @@ class Admin::LabelsController < ApplicationController
   end
 
   def destroy
-
+    @label.destroy
+    redirect_to admin_labels_path, notice: "ID#{@label.id}番のラベルを削除しました"
   end
 
   private
