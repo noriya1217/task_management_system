@@ -7,7 +7,7 @@
 <div class='row field'>
   <div class='col-md-12'>
     <% if @user.errors.any? %>
-      <div id='error_explanation' class='alert alert alert-danger'>
+      <div id='error_explanation' class='alert alert-danger'>
         <h2>このユーザーを保存出来ません【<%= pluralize(@user.errors.count, 'error') %>】</h2>
         <ul>
           <% @user.errors.full_messages.each do |message| %>

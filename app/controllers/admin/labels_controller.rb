@@ -7,11 +7,16 @@ class Admin::LabelsController < ApplicationController
   end
 
   def new
-
+    @label = Label.new
   end
 
   def create
-
+    @label = Label.new(label_params)
+    if @label.save
+      redirect_to admin_labels_path, notice: 'ラベルを作成しました'
+    else
+      render 'new'
+    end
   end
 
   def edit
@@ -27,6 +32,10 @@ class Admin::LabelsController < ApplicationController
   end
 
   private
+
+  def label_params
+    params.require(:label).permit(:name)
+  end
 
   def require_admin
     if logged_in?
