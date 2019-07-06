@@ -50,6 +50,17 @@
               <%= form.radio_button 'priority', :low %>low
             </td>
           </tr>
+
+           <tr class='field'>
+            <th>ラベル</th>
+            <td>
+              <!-- TODO: 現時点ではどのユーザーが作成したラベルでも全て表示されるので修正する -->
+              <% Label.all.each do |label| %>
+                <%= form.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
+                <label style='background-color: aquamarine'><%= label.name %></label>
+              <% end %>
+            </td>
+          </tr>
         <% end %>
       </table>
 
