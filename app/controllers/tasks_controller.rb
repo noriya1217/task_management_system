@@ -34,7 +34,6 @@ class TasksController < ApplicationController
   end
 
   def create
-    binding.pry
     @task = Task.new(task_params)
     if @task.save
       redirect_to root_path, notice: '新しいタスクを作成しました'
@@ -67,7 +66,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:subject, :content, :expired_at, :state, :priority, :user_id)
+    params.require(:task).permit(:subject, :content, :expired_at, :state, :priority, :user_id, label_ids: [])
   end
 
   def require_login

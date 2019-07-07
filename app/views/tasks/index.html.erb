@@ -54,6 +54,7 @@
               <th><%= sort_link(@q, :expired_at) %></th>
               <th><%= sort_link(@q, :state) %></th>
               <th><%= sort_link(@q, :priority) %></th>
+              <th>Label</th>
             </tr>
 
             <% @searchs.each do |search| %>
@@ -71,6 +72,11 @@
                 <td><%= search.expired_at %></td>
                 <td><%= search.state %></td>
                 <td><%= search.priority %></td>
+                <td>
+                  <% search.labels.each do |label| %>
+                    <span class='badge badge-secondary'><%= label.name %></span>
+                  <% end %>
+                </td>
                 <td><%= link_to '詳細', task_path(search.id), class: 'btn btn-info btn-sm' %></td>
                 <td><%= link_to '編集', edit_task_path(search.id), class: 'btn btn-warning btn-sm' %></td>
                 <td><%= link_to '削除', task_path(search.id), class: 'btn btn-danger btn-sm',method: :delete, data: { confirm: '本当に削除しますか？'} %></td>
@@ -96,6 +102,7 @@
             <th><%= sort_link(@q, :expired_at) %></th>
             <th><%= sort_link(@q, :state) %></th>
             <th><%= sort_link(@q, :priority) %></th>
+            <th>Label</th>
           </tr>
 
           <% @tasks.each do |task| %>
@@ -112,6 +119,11 @@
                 <td><%= task.expired_at %></td>
                 <td><%= task.state %></td>
                 <td><%= task.priority %></td>
+                <td>
+                  <% task.labels.each do |label| %>
+                    <span class='badge badge-secondary'><%= label.name %></span>
+                  <% end %>
+                </td>
                 <td><%= link_to '詳細', task_path(task.id), class: 'btn btn-info btn-sm' %></td>
                 <td><%= link_to '編集', edit_task_path(task.id), class: 'btn btn-warning btn-sm' %></td>
                 <td><%= link_to '削除', task_path(task.id), class: 'btn btn-danger btn-sm',method: :delete, data: { confirm: '本当に削除しますか？'} %></td>

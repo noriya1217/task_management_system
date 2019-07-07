@@ -51,13 +51,14 @@
             </td>
           </tr>
 
-           <tr class='field'>
-            <th>ラベル</th>
+          <tr class='field'>
+            <th>Label</th>
             <td>
-              <!-- TODO: 現時点ではどのユーザーが作成したラベルでも全て表示されるので修正する -->
+              <!-- TODO: 現時点ではどのユーザーが作成したラベルでも全て表示されるので修正 -->
               <% Label.all.each do |label| %>
-                <%= form.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
-                <label style='background-color: aquamarine'><%= label.name %></label>
+                  <!-- TODO: Createに失敗するとチェックボックスの中身が消えてしまう。 -->
+                  <%= form.check_box :label_ids, { multiple: true, checked: @task.labels.find_by(id: label.id).present?, include_hidden: false }, label[:id] %>
+                <label class='badge badge-secondary'><%= label.name %></label>
               <% end %>
             </td>
           </tr>
