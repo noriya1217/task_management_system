@@ -20,7 +20,7 @@
         <td>タスク数</td>
       </tr>
 
-      <% @user_labels.each do |label| %>
+      <% @user_labels.where(user_id: current_user.id).each do |label| %>
         <tr>
           <th><%= label.id %></th>
           <td><%= label.name %></td>
