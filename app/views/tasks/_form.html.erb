@@ -28,7 +28,7 @@
           <td><%= form.datetime_select :expired_at, { default: Time.current }, :include_blank => true%></td>
         </tr>
 
-        <%= form.hidden_field :user_id, value: current_user.id %>
+        <%= form.hidden_field :user_id, value: @task.user_id %>
 
         <% if action_name == 'new' || action_name == 'edit' || action_name == 'create' || action_name == 'update'%>
           <tr class='field'>
