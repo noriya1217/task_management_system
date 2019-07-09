@@ -27,6 +27,14 @@ RSpec.feature 'タスク管理システム(task)', type: :feature do
 
   end
 
+  scenario '管理者が作成できるラベルを編集する' do
+
+  end
+
+  scenario '各ユーザが作成できるラベルを編集する' do
+
+  end
+
   scenario '管理者のみ作成できるラベルと、各ユーザが作成できるラベルを両方選択して、タスクを作成する' do
 
   end
