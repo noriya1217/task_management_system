@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   root to: 'sessions#new'
   resources :tasks
   resources :users, only:[:new, :create, :show]
+  resources :sessions, only:[:new, :create, :destroy]
+  resources :labels
+
   namespace :admin do
     resources :users do
       collection do
@@ -13,5 +16,4 @@ Rails.application.routes.draw do
     end
     resources :labels
   end
-  resources :sessions, only:[:new, :create, :destroy]
 end

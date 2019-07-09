@@ -1,0 +1,33 @@
+<div class='row field'>
+  <div class='col-md-12'>
+    <h2>管理画面【ラベル新規登録画面】</h2>
+  </div>
+</div>
+
+<div class='row field'>
+  <div class='col-md-12'>
+    <% if @label.errors.any? %>
+      <div id='error_explanation' class='alert alert-danger'>
+        <h2>このラベルは保存出来ません【<%= pluralize(@label.errors.count, 'error') %>】</h2>
+        <ul>
+          <% @label.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class= 'row field'>
+  <div class='col-md-12'>
+    <%= form_with(model: @label, url: admin_labels_path, method: :post, local: true) do |label| %>
+      <table>
+        <tr><th><%= label.label :name %></th><td><%= label.text_field :name %></td></tr>
+      </table>
+      <%= label.submit 'ラベル登録する', class: 'btn btn-primary btn-sm' %>
+      <%= link_to 'ラベル一覧画面', admin_labels_path, class: 'btn btn-success btn-sm'%>
+      <%= link_to 'ユーザー一覧', admin_users_path, class: 'btn btn-secondary btn-sm' %>
+    <% end %>
+  </div>
+</div>

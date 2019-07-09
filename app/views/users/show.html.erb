@@ -2,5 +2,11 @@
   <div class='col-md-12'>
     <h3><%= @user.name %>のページ</h3>
     <p>メールアドレス: <%= @user.email %></p>
+    <p>
+      作成したラベル：
+      <% @user.labels.pluck(:name).each do |label| %>
+        <span class='badge badge-secondary'><%= label %></span>
+      <% end %>
+    </p>
   </div>
 </div>

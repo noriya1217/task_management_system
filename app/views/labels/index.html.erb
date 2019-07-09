@@ -1,0 +1,35 @@
+<div class='row field'>
+  <div class='col-md-12'>
+    <h2>管理画面【ラベル一覧画面】</h2>
+  </div>
+</div>
+
+<div class='row field'>
+  <div class='col-md-12 field'>
+    <%= link_to 'ラベルを新規登録する', new_admin_label_path, class: 'btn btn-success btn-sm' %>
+    <%= link_to 'タスク一覧画面', admin_users_path, class: 'btn btn-primary btn-sm' %>
+  </div>
+</div>
+
+<div class='row field'>
+  <div class='col-md-12'>
+    <table border=1>
+      <tr>
+        <th>id</th>
+        <td>name</td>
+        <td>タスク数</td>
+      </tr>
+
+      <% @labels.each do |label| %>
+        <tr>
+          <th><%= label.id %></th>
+          <td><%= label.name %></td>
+          <td></td>
+          <!-- <td><%#= label.tasks.count %></td> -->
+          <td><%= link_to '編集', edit_admin_label_path(label.id), class: 'btn btn-warning btn-sm' %></td>
+          <td><%= link_to '削除', admin_label_path(label.id), class: 'btn btn-danger btn-sm', method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

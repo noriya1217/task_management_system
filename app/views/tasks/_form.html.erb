@@ -28,7 +28,11 @@
           <td><%= form.datetime_select :expired_at, { default: Time.current }, :include_blank => true%></td>
         </tr>
 
-        <%= form.hidden_field :user_id, value: @task.user_id %>
+        <% if action_name == 'new' || action_name == 'create' %>
+          <%= form.hidden_field :user_id, value: current_user.id %>
+        <% else %>
+          <%= form.hidden_field :user_id, value: @task.user_id %>
+        <% end %>
 
         <% if action_name == 'new' || action_name == 'edit' || action_name == 'create' || action_name == 'update'%>
           <tr class='field'>
@@ -54,11 +58,16 @@
           <tr class='field'>
             <th>Label</th>
             <td>
-              <!-- TODO: 現時点ではどのユーザーが作成したラベルでも全て表示されるので修正 -->
               <% Label.all.each do |label| %>
                   <!-- TODO: Createに失敗するとチェックボックスの中身が消えてしまう。 -->
                   <%= form.check_box :label_ids, { multiple: true, checked: @task.labels.find_by(id: label.id).present?, include_hidden: false }, label[:id] %>
                 <label class='badge badge-secondary'><%= label.name %></label>
+              <% end %>
+              
+              <% UserLabel.where(user_id: current_user.id).each do |label| %>
+                  <!-- TODO: Createに失敗するとチェックボックスの中身が消えてしまう。 -->
+                  <%= form.check_box :user_label_ids, { multiple: true, checked: @task.labels.find_by(id: label.id).present?, include_hidden: false }, label[:id] %>
+                <label class='badge badge-info'><%= label.name %></label>
               <% end %>
             </td>
           </tr>

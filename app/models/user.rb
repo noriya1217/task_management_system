@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_one :admin, dependent: :destroy
   has_many :tasks, dependent: :destroy
+  has_many :user_labels, dependent: :destroy
   accepts_nested_attributes_for :admin, allow_destroy: true
 
   has_secure_password

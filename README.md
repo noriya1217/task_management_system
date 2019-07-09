@@ -9,11 +9,11 @@
 
 ## テーブル表
 
-|admin  |   |user           |       |task            |        |labeling|       |label  |       |
-|:--    |:--|:--            |:--    |:--             |:--     |:--     |:--    |:--    |       |
-|id     |   |id             |       |id              |        |id      |       |id     |       |
-|user_id|   |name           |string |user_id         |integer |task_id |integer|name   |string |
-|       |   |email          |string |subject         |string  |label_id|integer|
+|admin  |   |user           |       |task            |        |labeling|       |label  |       |user_labeling|       |user_label|   |
+|:--    |:--|:--            |:--    |:--             |:--     |:--     |:--    |:--    |:--    |:--          |:--    |:--       |:--|
+|id     |   |id             |       |id              |        |id      |       |id     |       |id           |       |id        |   |
+|user_id|   |name           |string |user_id         |integer |task_id |integer|name   |string |task_id      |integer|name      |   |
+|       |   |email          |string |subject         |string  |label_id|integer|       |integer|label_id     |integer|user_id   |   |
 |       |   |password_digest|string |content         |string  |
 |       |   |               |       |priority        |string  |
 |       |   |               |       |status          |string  |

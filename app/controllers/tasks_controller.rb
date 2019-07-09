@@ -3,16 +3,17 @@ class TasksController < ApplicationController
   before_action :require_login
 
   def index
-    @tasks = params[:sort_key].present? ? Task.sorted_by(params[:sort_key], params[:page]) : Task.latest(params[:page])
-
-    # index画面にて表のNameをSortする機能を実装するにはUserテーブルの操作が必要
+    # TODO: index画面にて表のNameをSortする機能を実装するにはUserテーブルの操作が必要
     # params[:q][:s] == 'name ask' || params[:q][:s] == 'name desk'
     # 要件には無いが、使えない状態はよくないので、後ほど実装方法考える。
-
     @q = Task.search_ransack(params[:q])
-    # @q.resultをモデルに移行したいが、上手くいかない。余裕があれば考える。
-    @searchs = @q.result(distinct: true).page(params[:page])
-    @search_count = @q.result(distinct: true).count
+    if params[:q].nil?
+      @tasks = params[:sort_key].present? ? Task.sorted_by(params[:sort_key], params[:page]) : Task.latest(params[:page])
+    else
+      # TODO: @q.resultをモデルに移行したいが、上手くいかない。余裕があれば考える。
+      @tasks = @q.result(distinct: true).page(params[:page])
+      @search_count = @q.result(distinct: true).count
+    end
   end
 
   def new
@@ -21,6 +22,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    binding.pry
     if @task.save
       redirect_to root_path, notice: '新しいタスクを作成しました'
     else
@@ -52,7 +54,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:subject, :content, :expired_at, :state, :priority, :user_id, label_ids: [])
+    params.require(:task).permit(:subject, :content, :expired_at, :state, :priority, :user_id, label_ids: [], user_label_ids: [])
   end
 
   def require_login
