@@ -20,9 +20,15 @@
       <%= f.label :subject %>
       <%= f.search_field :subject_cont %>
       <%= f.label :state %>
-      <%= f.select :state_eq, ['指定無し','未着手','着手中','完了'] %>
+      <%= f.select :state_eq, ['未着手','着手中','完了'], include_blank: "指定無し" %>
       <%= f.label :user_id %>
-      <%= f.select :user_id_eq, ["全てのタスク", "#{current_user.name}のタスク"] %>
+      <%= f.select :user_id_eq, [["#{current_user.name}" , "#{current_user.id}"]], include_blank: "全てのタスク" %>
+
+      <% if Label.count > 0 %>
+        <%= f.label :labels_name %>
+        <%= f.select :labels_id_eq, Label.all.map {|label| [label.name, label.id]}, include_blank: "指定無し" %>
+      <% end %>
+
       <%= f.submit 'Search', class: 'btn btn-primary btn-sm' %>
     <% end %>
   </div>
