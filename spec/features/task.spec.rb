@@ -197,7 +197,7 @@ RSpec.feature 'タスク管理システム(task)', type: :feature do
     FactoryBot.create(:second_user)
     FactoryBot.create(:fourth_task)
     visit tasks_path
-    select 'hogeのタスク', from: 'q_user_id_eq'
+    select 'hoge', from: 'q_user_id_eq'
     click_button 'Search'
     expect(page).not_to have_content 'test_task_04'
     expect(page).not_to have_content 'piyopiyopiyo'
