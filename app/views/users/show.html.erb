@@ -4,8 +4,8 @@
     <p>メールアドレス: <%= @user.email %></p>
     <p>
       作成したラベル：
-      <% @user.labels.pluck(:name).each do |label| %>
-        <span class='badge badge-secondary'><%= label %></span>
+      <% @user.user_labels.all.each do |label| %>
+        <span class='badge badge-info'><%= link_to "#{label.name}", edit_label_path(label.id) %></span>
       <% end %>
     </p>
   </div>

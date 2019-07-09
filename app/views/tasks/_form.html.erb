@@ -2,7 +2,7 @@
   <div class='col-md-12'>
     <% if @task.errors.any? %>
       <div id='error_explanation' class='alert alert alert-danger'>
-        <h2><%= pluralize(@task.errors.count, 'error') %></h2> 
+        <h2><%= pluralize(@task.errors.count, 'error') %></h2>
         <ul>
           <% @task.errors.full_messages.each do |message| %>
             <li><%= message %></li>
@@ -63,11 +63,14 @@
                   <%= form.check_box :label_ids, { multiple: true, checked: @task.labels.find_by(id: label.id).present?, include_hidden: false }, label[:id] %>
                 <label class='badge badge-secondary'><%= label.name %></label>
               <% end %>
-              
-              <% UserLabel.where(user_id: current_user.id).each do |label| %>
-                  <!-- TODO: Createに失敗するとチェックボックスの中身が消えてしまう。 -->
-                  <%= form.check_box :user_label_ids, { multiple: true, checked: @task.labels.find_by(id: label.id).present?, include_hidden: false }, label[:id] %>
-                <label class='badge badge-info'><%= label.name %></label>
+
+              <!-- TODO: 動的にラベルを追加できるとなお良い -->
+              <% if @task.user_id.equal?(current_user.id) %>
+                <% UserLabel.where(user_id: current_user.id).each do |label| %>
+                    <!-- TODO: Createに失敗するとチェックボックスの中身が消えてしまう。 -->
+                    <%= form.check_box :user_label_ids, { multiple: true, checked: @task.user_labels.find_by(id: label.id).present?, include_hidden: false }, label[:id] %>
+                  <label class='badge badge-info'><%= label.name %></label>
+                <% end %>
               <% end %>
             </td>
           </tr>

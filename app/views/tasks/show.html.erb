@@ -15,6 +15,10 @@
           <% @task.labels.each do |label| %>
             <span class='badge badge-secondary'><%= label.name %></span>
           <% end %>
+
+          <% @task.user_labels.each do |label| %>
+            <span class='badge badge-info'><%= label.name %></span>
+          <% end %>
         </td>
       </tr>
     </table>
