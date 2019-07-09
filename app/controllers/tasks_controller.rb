@@ -22,7 +22,6 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    binding.pry
     if @task.save
       redirect_to root_path, notice: '新しいタスクを作成しました'
     else
