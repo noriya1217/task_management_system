@@ -1,7 +1,7 @@
 1.times do |n|
   User.create!(
     name: 'admin',
-    email: 'admin@admin.admin',
+    email: Faker::Internet.email,
     password: 'password',
     password_confirmation: 'password',
     )
@@ -27,7 +27,7 @@ end
   state = ['未着手','着手中','完了'].sample
   priority = [0, 1, 2].sample
   user_id_array = []
-  (User.last.id - User.first.id + 1).times do |n| user_id_array << (n + User.first.id) end
+  User.all.each do |user| user_id_array << user.id end
   user_id = user_id_array.sample
   Task.create!(
               subject: subject,
@@ -37,6 +37,11 @@ end
               priority: priority,
               user_id: user_id,
               )
+end
+
+10.times do |n|
+  name = "test_label_#{n}"
+  Label.create!(name: name)
 end
 
 

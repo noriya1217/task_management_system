@@ -9,6 +9,18 @@
       <tr><th>Expired:</th><td><%= @task.expired_at %></td></tr>
       <tr><th>State:</th><td><%= @task.state %></td></tr>
       <tr><th>Priority:</th><td><%= @task.priority %></td></tr>
+      <tr>
+        <th>Label:</th>
+        <td>
+          <% @task.labels.each do |label| %>
+            <span class='badge badge-secondary'><%= label.name %></span>
+          <% end %>
+
+          <% @task.user_labels.each do |label| %>
+            <span class='badge badge-info'><%= label.name %></span>
+          <% end %>
+        </td>
+      </tr>
     </table>
 
     <%= link_to '一覧', root_path, class: 'btn btn-success btn-sm ' %>

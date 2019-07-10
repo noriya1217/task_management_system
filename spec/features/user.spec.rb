@@ -24,7 +24,6 @@ RSpec.feature 'タスク管理システム(user/session)', type: :feature do
     fill_in 'session_password', with: 'password'
     fill_in 'session_password_confirmation', with: 'password'
     click_button 'ログイン'
-    save_and_open_page
     expect(page).to have_content 'ログインしました'
     click_link 'Logout'
     expect(page).to have_content 'ログアウトしました'
