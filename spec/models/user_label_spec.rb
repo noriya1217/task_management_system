@@ -7,7 +7,8 @@ RSpec.describe UserLabel, type: :model do
 
   it 'nameの値がnilの状態で保存するとNotNull例外評価になる' do
     user_label = UserLabel.new(name: nil, user_id: User.first.id)
-    expect { user_label.save }.to raise_error(ActiveRecord::NotNullViolation)
+    # expect { user_label.save }.to raise_error(ActiveRecord::NotNullViolation)
+    expect(user_label.save).to be_falsey
   end
 
   it 'user_idの値がnilの状態で保存するとNotNull例外評価になる' do

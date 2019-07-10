@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user_label do
-    name { "Vue.js" }
+    name { 'Vue.js' }
     user_id { User.first.id }
   end
 
