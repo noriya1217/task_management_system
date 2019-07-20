@@ -17,8 +17,14 @@
         <tr><th><%= f.label :email %></th><td><%= f.email_field :email %></td></tr>
         <tr><th><%= f.label :password %></th><td><%= f.password_field :password %></td></tr>
         <tr><th><%= f.label :password_confirmation %></th><td><%= f.password_field :password_confirmation %></td></tr>
-        <tr><th><%= f.submit 'ログイン', class: 'btn btn-primary btn-sm' %></th></tr>
       </table>
+      <%= f.submit 'ログイン', class: 'btn btn-primary btn-sm' %>
+    <% end %>
+
+    <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
+      <%= f.hidden_field :email, value: @test_user.email %>
+      <%= f.hidden_field :password_digest, value: @test_user.password_digest %>
+      <%= f.submit 'テストユーザーでログイン', class: 'btn btn-success btn-sm' %>
     <% end %>
   </div>
 </div>
