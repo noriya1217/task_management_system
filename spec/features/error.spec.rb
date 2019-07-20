@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.feature 'タスク管理システム(error)', type: :feature do
 
   background do
-    page.driver.browser.authorize('hoge', 'piyo')
     visit root_path
   end
 

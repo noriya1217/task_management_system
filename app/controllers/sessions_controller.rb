@@ -1,15 +1,19 @@
 class SessionsController < ApplicationController
   before_action :require_login, only: [:new, :create]
 
-  def new; end
+  def new
+    # TODO: 仮で設定するので、動作確認したら正しいものにする
+    @test_user = User.find_by(name: "test")
+  end
 
   def create
     user = User.find_by(email: params[:session][:email].downcase)
-    if user && user.authenticate(params[:session][:password]) && user.authenticate(params[:session][:password_confirmation])
+    if user && ((user.authenticate(params[:session][:password]) && user.authenticate(params[:session][:password_confirmation])) || params[:commit].eql?('テストユーザーでログイン'))
       session[:user_id] = user.id
       redirect_to root_path, notice: 'ログインしました'
     else
       flash.now[:danger] = 'ログイン出来ませんでした'
+      @test_user = User.find_by(name: "test")
       render 'new'
     end
   end

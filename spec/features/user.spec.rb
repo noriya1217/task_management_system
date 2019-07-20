@@ -4,7 +4,6 @@ RSpec.feature 'タスク管理システム(user/session)', type: :feature do
 
   background do
     FactoryBot.create(:user)
-    page.driver.browser.authorize('hoge', 'piyo')
   end
 
   scenario 'アカウント作成のテスト' do

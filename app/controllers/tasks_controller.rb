@@ -14,6 +14,7 @@ class TasksController < ApplicationController
       @tasks = @q.result(distinct: true).page(params[:page])
       @search_count = @q.result(distinct: true).count
     end
+    @users = User.all
   end
 
   def new

@@ -5,7 +5,6 @@ RSpec.feature 'タスク管理システム(admin)', type: :feature do
   background do
     FactoryBot.create(:user)
     FactoryBot.create(:admin)
-    page.driver.browser.authorize('hoge', 'piyo')
     visit root_path
     fill_in 'session_email', with: 'hoge@example.com'
     fill_in 'session_password', with: 'password'
