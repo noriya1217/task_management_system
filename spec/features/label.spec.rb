@@ -14,9 +14,6 @@ RSpec.feature 'タスク管理システム(label)', type: :feature do
     FactoryBot.create(:second_user_label)
     FactoryBot.create(:user_labeling)
     FactoryBot.create(:second_user_labeling)
-    # FactoryBot.create(:second_task)
-    # FactoryBot.create(:third_task)
-    page.driver.browser.authorize('hoge', 'piyo')
     visit root_path
     fill_in 'session_email', with: 'hoge@example.com'
     fill_in 'session_password', with: 'password'

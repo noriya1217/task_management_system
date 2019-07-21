@@ -11,6 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
  *= require bootstrap/dist/css/bootstrap.min
+ *= require simple_calendar
  *= require_tree .
  *= require_self
  */
@@ -30,11 +31,5 @@ header{
 
 .top_menu a {
   display: block;
-  padding: 10px;
-}
-
-footer{
-  background-color: #AEC4E5;
-  text-align: center;
   padding: 10px;
 }

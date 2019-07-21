@@ -7,7 +7,6 @@ RSpec.feature 'タスク管理システム(task)', type: :feature do
     FactoryBot.create(:task)
     FactoryBot.create(:second_task)
     FactoryBot.create(:third_task)
-    page.driver.browser.authorize('hoge', 'piyo')
     visit root_path
     fill_in 'session_email', with: 'hoge@example.com'
     fill_in 'session_password', with: 'password'
@@ -33,7 +32,8 @@ RSpec.feature 'タスク管理システム(task)', type: :feature do
 
   scenario 'タスク詳細のテスト' do
     visit tasks_path
-    all('tr')[1].click_link '詳細'
+    first_task = all('tr')[1]
+    first_task.click_link '詳細'
     expect(page).to have_content 'hogehogehoge'
   end
 
