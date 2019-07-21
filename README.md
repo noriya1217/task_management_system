@@ -1,66 +1,40 @@
 # タスク管理システム
 
-## Basic認証のユーザー名とパスワード
-
-    ユーザー名　：　hoge
-    パスワード　：　piyo
-
----
-
-## テーブル表
-
-|admin  |   |user           |       |task            |        |labeling|       |label  |       |user_labeling|       |user_label|   |
-|:--    |:--|:--            |:--    |:--             |:--     |:--     |:--    |:--    |:--    |:--          |:--    |:--       |:--|
-|id     |   |id             |       |id              |        |id      |       |id     |       |id           |       |id        |   |
-|user_id|   |name           |string |user_id         |integer |task_id |integer|name   |string |task_id      |integer|name      |   |
-|       |   |email          |string |subject         |string  |label_id|integer|       |integer|label_id     |integer|user_id   |   |
-|       |   |password_digest|string |content         |string  |
-|       |   |               |       |priority        |string  |
-|       |   |               |       |status          |string  |
-|       |   |               |       |person_in_charge|string  |
-|       |   |               |       |start_date_at   |datetime|
-|       |   |               |       |end_date_at     |datetime|
-|       |   |               |       |expired_at      |datetime|
-|       |   |               |       |achievement_rate|integer |
-
----
-
-## フレームワーク等のバージョン
+## バージョン
 
 - Ruby 2.6.3
 - Rails 5.2.3
 - PostgreSQL 11.3
 
----
+## 機能一覧
 
-## Herokuへのデプロイ、操作等
+1. ログイン機能
+1. ユーザー登録
+1. プロフィール編集機能
+1. タスク一覧機能
+    - カレンダーの中に終了期限日のタスク表示
+    - ページネーション
+    - 検索機能
+1. Admin管理機能
 
-1. 基本
-    ```rb
-    $ heroku create
-    $ rails assets:precompile RAILS_ENV=production
-    $ git add -A
-    $ git commit -m "commit comment"
-    $ git push heroku master
-    $ heroku run rails db:migrate
-    ```
+## 使用Gem
 
-1. 開発ブランチ（develop）をherokuのmasterブランチにpushする
+### 本番
 
-    `$ git push heroku develop:master`
+- bootstrap
+- kaminari
+- ransack
+- simple_calendar
 
-1. リアルタイムでログ確認
+### 開発 / テスト
 
-    `$ heroku logs -t`
-
-1. コンソール確認
-
-    `$ heroku run rails console`
-
-1. Heroku再起動
-
-    `$ heroku restart`
-
-1. Herokuデータベースリセット
-
-    `$ heroku pg:reset DATABASE`
+- better_errors
+- binding_of_caller
+- capybara
+- database_cleaner
+- factory_bot_rails
+- faker
+- pry-rails
+- rspec-rails
+- rubocop
+- spring-commands-rspec
