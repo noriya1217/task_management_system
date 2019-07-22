@@ -3,7 +3,6 @@
     <h2>Userアカウント作成画面</h2>
   </div>
 </div>
-
 <div class='row field'>
   <div class='col-md-12'>
     <% if @user.errors.any? %>
@@ -18,7 +17,6 @@
     <% end %>
   </div>
 </div>
-
 <div class= 'row field'>
   <div class='col-md-12'>
     <%= form_with(model: @user, local: true) do |f| %>

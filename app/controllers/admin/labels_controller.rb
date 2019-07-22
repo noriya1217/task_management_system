@@ -1,5 +1,4 @@
 class Admin::LabelsController < ApplicationController
-  # TODO: admin/user_controllerも:require_adminメソッドがあるので、共通化出来ないか調べる→concernsフォルダ内に作成する？
   before_action :require_admin
   before_action :set_admin_label, only: [:edit, :update, :destroy]
 
@@ -49,7 +48,6 @@ class Admin::LabelsController < ApplicationController
   def require_admin
     if logged_in?
       unless Admin.find_by(user_id: current_user.id)
-        # TODO: 直接URLを指定すれば飛べてしまう。
         flash[:error] = 'このセクションにアクセス出来るのは、管理者権限のあるユーザーのみです'
         render :layout => 'admin/error', action: 'error'
       end

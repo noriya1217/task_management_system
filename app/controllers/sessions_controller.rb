@@ -2,7 +2,6 @@ class SessionsController < ApplicationController
   before_action :require_login, only: [:new, :create]
 
   def new
-    # TODO: 仮で設定するので、動作確認したら正しいものにする
     @test_user = User.find_by(name: "test")
   end
 

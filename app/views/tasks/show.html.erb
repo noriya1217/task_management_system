@@ -2,7 +2,6 @@
   <div class='col-md-12'>
     <p id="notice"><%= notice %></tr>
     <h2>Task詳細画面</h2>
-
     <table>
       <tr><th>Subject:</th><td><%= @task.subject %></td></tr>
       <tr><th>Content:</th><td><%= @task.content %></td></tr>
@@ -15,14 +14,12 @@
           <% @task.labels.each do |label| %>
             <span class='badge badge-secondary'><%= label.name %></span>
           <% end %>
-
           <% @task.user_labels.each do |label| %>
             <span class='badge badge-info'><%= label.name %></span>
           <% end %>
         </td>
       </tr>
     </table>
-
     <%= link_to '一覧', root_path, class: 'btn btn-success btn-sm ' %>
     <%= link_to '編集',edit_task_path(@task.id), class: 'btn btn-warning btn-sm' %>
   </div>

@@ -10,30 +10,25 @@
         </ul>
       </div>
     <% end %>
-
     <%= form_with(model: @task, local: true) do |form| %>
       <table>
         <tr class='field'>
           <th><%= form.label :subject %></th>
           <td><%= form.text_field :subject %></td>
         </tr>
-
         <tr class='field'>
           <th><%= form.label :content %></th>
           <td><%= form.text_field :content %></td>
         </tr>
-
         <tr class='field'>
           <th><%= form.label :expired_at %></th>
           <td><%= form.datetime_select :expired_at, { default: Time.current }, :include_blank => true%></td>
         </tr>
-
         <% if action_name == 'new' || action_name == 'create' %>
           <%= form.hidden_field :user_id, value: current_user.id %>
         <% else %>
           <%= form.hidden_field :user_id, value: @task.user_id %>
         <% end %>
-
         <% if action_name == 'new' || action_name == 'edit' || action_name == 'create' || action_name == 'update'%>
           <tr class='field'>
             <th><%= form.label :state %></th>
@@ -45,7 +40,6 @@
               <% end %>
             </td>
           </tr>
-
           <tr class='field'>
             <th><%= form.label :priority %></th>
             <td>
@@ -54,21 +48,16 @@
               <%= form.radio_button 'priority', :low %>low
             </td>
           </tr>
-
           <tr class='field'>
             <th>Label</th>
             <td>
               <% Label.all.each do |label| %>
-                  <!-- TODO: Createに失敗するとチェックボックスの中身が消えてしまう。 -->
-                  <%= form.check_box :label_ids, { multiple: true, checked: @task.labels.find_by(id: label.id).present?, include_hidden: false }, label[:id] %>
+                <%= form.check_box :label_ids, { multiple: true, checked: @task.labels.find_by(id: label.id).present?, include_hidden: false }, label[:id] %>
                 <label class='badge badge-secondary'><%= label.name %></label>
               <% end %>
-
-              <!-- TODO: 動的にラベルを追加できるとなお良い -->
               <% if action_name == 'new' || action_name == 'create' || @task.user_id.equal?(current_user.id) %>
                 <% UserLabel.where(user_id: current_user.id).each do |label| %>
-                    <!-- TODO: Createに失敗するとチェックボックスの中身が消えてしまう。 -->
-                    <%= form.check_box :user_label_ids, { multiple: true, checked: @task.user_labels.find_by(id: label.id).present?, include_hidden: false }, label[:id] %>
+                  <%= form.check_box :user_label_ids, { multiple: true, checked: @task.user_labels.find_by(id: label.id).present?, include_hidden: false }, label[:id] %>
                   <label class='badge badge-info'><%= label.name %></label>
                 <% end %>
               <% end %>
@@ -76,7 +65,6 @@
           </tr>
         <% end %>
       </table>
-
       <div class='actions'>
         <%= form.submit class: 'btn btn-primary btn-sm'%>
         <% if action_name == 'new' || action_name == 'create' %>
@@ -86,7 +74,6 @@
           <%= link_to '詳細', @task, class: 'btn btn-info btn-sm' %>
         <% end %>
       </div>
-
     <% end %>
   </div>
 </div>

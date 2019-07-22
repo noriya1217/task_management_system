@@ -3,13 +3,10 @@
     <h2>ログイン画面</h2>
   </div>
 </div>
-
-<!-- ログイン失敗時のエラー処理 -->
 <div class='row field'>
   <div class='col-md-12'>
   </div>
 </div>
-
 <div class='row fielf'>
   <div class='col-md-12'>
     <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
@@ -20,7 +17,6 @@
       </table>
       <%= f.submit 'ログイン', class: 'btn btn-primary btn-sm' %>
     <% end %>
-
     <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
       <%= f.hidden_field :email, value: @test_user.email %>
       <%= f.hidden_field :password_digest, value: @test_user.password_digest %>

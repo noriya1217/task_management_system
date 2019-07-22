@@ -4,23 +4,17 @@
     <title>Admin - TaskManagementSystem</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
-
     <div class='container-fluid'>
       <header class='admin_backcolor'>
         <div class='row'>
-
           <div class='col-md-8'>
-              <h1>タスク管理システム</h1>
+            <h1>タスク管理システム</h1>
           </div>
-
           <% if logged_in? %>
-
             <% if Admin.find_by(user_id: current_user.id) %>
               <div class='col-md-1 top_menu'>
                 <%= link_to 'Admin', admin_users_path %>
@@ -28,7 +22,6 @@
             <% else %>
               <div class='col-md-1 top_menu'></div>
             <% end %>
-
             <div class='col-md-1 top_menu'>
               <%= link_to 'Task', tasks_path %>
             </div>
@@ -47,11 +40,8 @@
               <%= link_to 'Login', new_session_path %>
             </div>
           <% end %>
-
         </div>
-
       </header>
-
       <div class='row'>
         <div class='col-md-12'>
           <% flash.each do |key, value| %>
@@ -60,9 +50,7 @@
           <% end %>
         </div>
       </div>
-
-        <%= yield %>
+      <%= yield %>
     </div>
-
   </body>
 </html>

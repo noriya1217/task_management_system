@@ -5,16 +5,12 @@
     </div>
   </div>
 <% end %>
-
 <div class='row field'>
   <div class='col-md-12'>
     <h2>Task一覧ページ</h2>
   </div>
 </div>
-
-<!-- TODO: (1)Subjectだけ入力 (2)Stateだけ入力 (3)どちらも入力 -->
 <div class='row field'>
-
   <div class='col-md-12'>
     <%= search_form_for @q do |f| %>
       <%= f.label :subject %>
@@ -23,27 +19,22 @@
       <%= f.select :state_eq, ['未着手','着手中','完了'], include_blank: "指定無し" %>
       <%= f.label :user_id %>
       <%= f.select :user_id_eq, [["#{current_user.name}" , "#{current_user.id}"]], include_blank: "全てのタスク" %>
-
       <% if Label.count > 0 %>
         <%= f.label :labels_name %>
         <%= f.select :labels_id_eq, Label.all.map {|label| [label.name, label.id]}, include_blank: "指定無し" %>
       <% end %>
-
       <% if UserLabel.where(user_id: current_user.id).count > 0 %>
         <%= f.label :user_labels_name %>
         <%= f.select :user_labels_id_eq, UserLabel.where(user_id: current_user.id).map {|label| [label.name, label.id]}, include_blank: "指定無し" %>
       <% end %>
-
       <%= f.submit 'Search', class: 'btn btn-primary btn-sm' %>
     <% end %>
   </div>
-
   <div class='col-md-12'>
     <%= link_to 'タスクを新規登録する', new_task_path , class: 'btn btn-success btn-sm field'%>
     <%= link_to 'ラベル一覧画面', labels_path, class: 'btn btn-primary btn-sm' %>
   </div>
 </div>
-
 <div class='row field'>
   <div class='col-md-12'>
     <%= month_calendar do |date| %>
@@ -55,14 +46,11 @@
     <% end %>
   </div>
 </div>
-
 <div class='row field'>
   <div class='col-md-12'>
-
     <% if @search_count.present? %>
       <h3>検索結果【<%= @search_count %>件ヒットしました】</h3>
     <% end %>
-
     <% if @tasks.count > 0 %>
       <table border='1'>
         <tr>
@@ -74,7 +62,6 @@
           <th><%= sort_link(@q, :priority) %></th>
           <th>Label</th>
         </tr>
-
         <% @tasks.each do |task| %>
           <% if task.state == '未着手' %>
             <tr class='task_not_running'>
@@ -89,19 +76,16 @@
             <td><%= task.expired_at %></td>
             <td><%= task.state %></td>
             <td><%= task.priority %></td>
-
             <td>
               <% task.labels.each do |label| %>
                 <span class='badge badge-secondary'><%= label.name %></span>
               <% end %>
-
               <% if task.user_id.equal?(current_user.id) %>
                 <% task.user_labels.each do |label| %>
                   <span class='badge badge-info'><%= label.name %></span>
                   <% end %>
                 <% end %>
             </td>
-
             <td><%= link_to '詳細', task_path(task.id), class: 'btn btn-info btn-sm' %></td>
             <td><%= link_to '編集', edit_task_path(task.id), class: 'btn btn-warning btn-sm' %></td>
             <td><%= link_to '削除', task_path(task.id), class: 'btn btn-danger btn-sm',method: :delete, data: { confirm: '本当に削除しますか？'} %></td>
@@ -110,7 +94,6 @@
       </table>
     <% end %>
   </div>
-
   <% paginations = @tasks %>
   <div class='col-md-12 flex_container'>
     <%= paginate paginations, window: 2 %>

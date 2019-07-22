@@ -1,5 +1,4 @@
 class LabelsController < ApplicationController
-  # TODO: 他のControllerも:require_loginメソッドがあるので、共通化出来ないか調べる→concernsフォルダ内に作成する？
   before_action :require_login, only: [:new, :create]
   before_action :set_user_label, only: [:edit, :update, :destroy]
 

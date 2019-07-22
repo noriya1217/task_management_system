@@ -14,8 +14,6 @@ class Admin::UsersController < ApplicationController
   def create
     params[:user][:admin_attributes] = nil if params[:user][:admin_attributes][:user_id] == '無'
     @user = User.new(user_params)
-    # TODO: ユーザー新規登録にて管理者権限を'有'の時User.last.id + 1をparams[:user][:admin_attributes][:user_id]に入れてみたが、Admin.newに入れるのに失敗する。
-    # しかし、@user.saveを実行すると対応Adminテーブルにもsaveしたuserのidが入っている。これはreferencesされているから？要調査。
     if @user.save
       redirect_to admin_users_path, notice: 'アカウント作成しました'
     else
