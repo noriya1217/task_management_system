@@ -30,7 +30,7 @@ Rails.application.configure do
   config.assets.compile = true
 
   config.assets.paths << Rails.root.join("node_modules/bootstrap/dist/css/bootstrap.min.css").to_s
-  config.assets.paths << Rails.root.join("node_modules/bootstrap/dist/css/bootstrap.min.css").to_s
+  config.assets.paths << Rails.root.join("node_modules/bootstrap/dist/css/bootstrap.min.js").to_s
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
