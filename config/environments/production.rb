@@ -27,7 +27,7 @@ Rails.application.configure do
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset  is missed.
-  config.assets.compile = true
+  config.assets.compile = false
 
   config.assets.paths << Rails.root.join("node_modules/bootstrap/dist/css/bootstrap.min.css").to_s
   config.assets.paths << Rails.root.join("node_modules/bootstrap/dist/css/bootstrap.min.js").to_s
