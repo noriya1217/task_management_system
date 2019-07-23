@@ -25,6 +25,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'unicorn'
 
 group :development, :test do
+  gem 'bcrypt_pbkdf'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -35,6 +36,7 @@ group :development, :test do
   gem 'capistrano3-unicorn'
   gem 'capybara'
   gem 'database_cleaner'
+  gem 'ed25519'
   gem 'factory_bot_rails'
   gem 'launchy'
   gem 'pry-rails'
