@@ -12,7 +12,6 @@ gem 'coffee-rails', '~> 4.2'
 gem 'dotenv-rails'
 gem 'enum_help'
 gem 'faker'
-gem 'jquery-rails'
 gem 'kaminari'
 gem 'mini_racer', platforms: :ruby
 gem 'pg', '>= 0.18', '< 2.0'
