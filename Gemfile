@@ -16,7 +16,7 @@ gem 'jquery-rails'
 gem 'kaminari'
 gem 'mini_racer', platforms: :ruby
 gem 'pg', '>= 0.18', '< 2.0'
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.12'
 gem 'ransack'
 gem 'sass-rails', '~> 5.0'
 gem "simple_calendar", "~> 2.0"
