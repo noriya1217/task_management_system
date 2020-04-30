@@ -2,7 +2,7 @@
   "name": "task_management_system",
   "private": true,
   "dependencies": {
-    "jquery": "^3.4.1"
+    "jquery": "^3.5.0"
   },
   "devDependencies": {
     "bootstrap": "4.3.1"
